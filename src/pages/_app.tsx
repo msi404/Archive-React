@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router-dom'
+import { Providers } from '@/shared/providers/providers'
 
 export default function RootLayout ()
 {
   return (
-    <div>
-      <header>My App Header</header>
-      <main>
+    <Providers>
+       <main className='w-full p-6'>
         <Outlet />
       </main>
-    </div>
+     </Providers>
   )
 }
