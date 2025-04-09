@@ -1,0 +1,1 @@
+export {useIsMobile} from '@/shared/models/use-mobile'

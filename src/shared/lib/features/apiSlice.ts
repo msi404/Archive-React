@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {type RootState} from '@/shared/lib/store'
 
-export const baseURL = process.env.NEXT_PUBLIC_BASE_URL
+export const baseURL = import.meta.env.VITE_API_URL
 
 export const tatweerApi = createApi( {
 	reducerPath: 'tatweerApi',

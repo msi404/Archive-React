@@ -1,6 +1,6 @@
 import type { FC, ReactElement } from 'react'
-import { For } from '@/shared/components/utils/for'
-import { Dynamic } from '@/shared/components/utils/dynamic'
+import { For } from '@/shared/components'
+import { Dynamic } from '@/shared/components'
 
 export const Header: FC<{ elements: ReactElement[] }> = ({ elements }) => {
 	return (

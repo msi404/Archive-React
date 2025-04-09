@@ -1,0 +1,1 @@
+export {loginValidationSchema} from '@/pages/login/models/validation/login.validation'

@@ -8,32 +8,32 @@ type SidebarItem = {
 export const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     title: 'الرئيسية',
-    url: '/',
+    url: '/dashboard',
     icon: 'solar:home-2-bold-duotone'
 	},
   {
     title: 'السلة',
-    url: '/electoral-entities',
+    url: '/cart',
     icon: 'solar:cart-large-minimalistic-bold-duotone'
   },
   {
     title: 'الكتب',
-    url: '/parties-representers',
+    url: '/books',
     icon: 'solar:book-bookmark-minimalistic-bold-duotone'
   },
   {
     title: 'المشاركة معي',
-    url: '/polling-management',
+    url: '/share',
     icon: 'solar:share-circle-bold-duotone',
   },
   {
     title: 'المرسلة',
-    url: '/data-entries',
+    url: '/sent',
     icon: 'solar:map-arrow-square-bold-duotone'
   },
   {
     title: 'المستخدمين',
-    url: '/observers',
+    url: '/users',
     icon: 'solar:users-group-two-rounded-bold-duotone'
   },
 ];
