@@ -1,10 +1,11 @@
-
+import { DynamicTable } from '@/shared/components'
+import {useBooksTable} from '@/pages/(dashboard)/books/models'
 export default function BooksPage ()
 {
+	const booksTable = useBooksTable([{d: 'f'}])
+
 	return (
-		<div>
-			<h1>ss</h1>
-		</div>
+			<DynamicTable table={booksTable}/>
 	)
  }
  

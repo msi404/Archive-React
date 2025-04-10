@@ -53,7 +53,75 @@ export type BookType = {
 
 export const booksColumns: ColumnDef<BookType>[] = [
 	{
+		accessorKey: 'titleName',
+		header: 'الموضوع'
+	},
+	{
 		accessorKey: 'bookKind',
 		header: 'تصنيف الكتاب'
-	}
+	},
+	{
+		accessorKey: 'type',
+		header: 'نوع الكتاب'
+	},
+	{
+		accessorKey: 'destinationName',
+		header: 'من / الى'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
+	{
+		accessorKey: 'bookKind',
+		header: 'تصنيف الكتاب'
+	},
 ]
