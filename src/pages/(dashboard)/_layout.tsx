@@ -1,13 +1,17 @@
 import { Fragment } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import {selectUser} from '@/shared/lib/features/authSlice'
-import { SidebarTrigger, SidebarProvider } from '@/shared/components/ui/sidebar'
+import { selectUser } from '@/shared/lib/features/authSlice'
+import {
+	SidebarTrigger,
+	SidebarProvider,
+	SidebarInset
+} from '@/shared/components/ui/sidebar'
 import { AppSidebar } from '@/shared/components'
 import { Header } from '@/shared/components'
 import { UserSetting } from '@/shared/components'
-export default function Layout ()
-{
+import { Container } from '@/shared/components'
+export default function Layout() {
 	const user = useSelector(selectUser)
 	return (
 		<Fragment>
@@ -24,10 +28,14 @@ export default function Layout ()
 			/>
 			<SidebarProvider>
 				<AppSidebar />
-				<SidebarTrigger />
-				<main className="w-full p-4 pt-28">
-					<Outlet />
-				</main>
+				<SidebarInset>
+					<SidebarTrigger />
+					<main className="w-full pt-12">
+						<Container>
+							<Outlet />
+						</Container>
+					</main>
+				</SidebarInset>
 			</SidebarProvider>
 		</Fragment>
 	)

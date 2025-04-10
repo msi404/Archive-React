@@ -18,7 +18,7 @@ import { TatweerLogo } from '@/shared/components'
 
 export function AppSidebar() {
 	return (
-		<Sidebar className="dark" collapsible="icon" side="right">
+		<Sidebar className="dark" collapsible="icon" side="right" >
 			<SidebarHeader />
 			<SidebarContent>
 				<TatweerLogo />

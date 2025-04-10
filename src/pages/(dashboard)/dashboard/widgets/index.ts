@@ -1,0 +1,1 @@
+export {BooksStats} from '@/pages/(dashboard)/dashboard/widgets/books-stats'

@@ -1,0 +1,1 @@
+export {KpiCard} from '@/pages/(dashboard)/dashboard/components/kpi-card'

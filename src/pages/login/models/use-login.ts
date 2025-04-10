@@ -1,6 +1,6 @@
-import { usePostApiAuthLoginMutation } from '@/shared/api/archiveApi'
+import { usePostApiAuthLoginMutation } from '@/shared/api/archiveApi';
 import type { PostApiAuthLoginApiArg } from '@/shared/api/archiveApi'
-
+import {toast} from 'sonner'
 const initialValues: PostApiAuthLoginApiArg = {
 	loginDto: {
 		email: '',
@@ -17,9 +17,13 @@ export const useLogin = () =>
 		try
 		{
 			await login( values ).unwrap()
+			toast.success('تم تسجيل الدخول بنجاح.')
 		} catch ( error )
 		{
-			console.error(error)
+			console.error( error )
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			//@ts-expect-error
+			toast.error(error.data.message)
 		}
 	}
 
