@@ -30,11 +30,11 @@ export default function Layout() {
 				<AppSidebar />
 				<SidebarInset>
 					<SidebarTrigger />
-					<main className="w-full pt-12">
+					<section className="w-full pt-12 pb-10">
 						<Container>
 							<Outlet />
 						</Container>
-					</main>
+					</section>
 				</SidebarInset>
 			</SidebarProvider>
 		</Fragment>

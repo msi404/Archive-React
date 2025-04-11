@@ -9,6 +9,7 @@ import {
 	TableHeader,
 	TableRow
 } from '@/shared/components/ui/table'
+import {TableViewOptions} from '@/shared/components/table-view-options'
 import { For } from '@/shared/components/utils/for'
 import { Show } from '@/shared/components/utils/show'
 
@@ -18,9 +19,11 @@ interface DynamicTableProps {
 
 export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 	return (
-		<div className="overflow-hidden border w-[1130px]">
+		<>
+			{/* <TableViewOptions table={table}/> */}
+			<div className="overflow-hidden border w-[1130px] mx-auto max-w-full rounded-xl shadow-2xl">
 			<Table>
-				<TableHeader>
+				<TableHeader className='bg-secondary'>
 					<For each={table.getHeaderGroups()}>
 						{(headerGroup: any) => (
 							<TableRow key={headerGroup.id}>
@@ -75,5 +78,6 @@ export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 				</TableBody>
 			</Table>
 		</div>
+		</>
 	)
 }

@@ -1,12 +1,16 @@
 import { useReactTable, getCoreRowModel, type Table } from '@tanstack/react-table'
-import { booksColumns, type BookType } from '@/pages/(dashboard)/books/config'
+import type { ReturnDocument } from '@/shared/api/archiveApi'
+import { useBooksColumns } from '@/pages/(dashboard)/books/models'
 
-export const useBooksTable = (data: BookType[]): Table<BookType> =>
+export const useBooksTable = (data: ReturnDocument[]): Table<ReturnDocument> =>
 {
+	const { booksColumns } = useBooksColumns()
+	
 	const booksTable = useReactTable( {
 		data,
 		columns: booksColumns,
-		getCoreRowModel: getCoreRowModel()
+		getCoreRowModel: getCoreRowModel(),
+		renderFallbackValue: <h1>لا يوجد</h1>
 	} )
 	
 	return booksTable

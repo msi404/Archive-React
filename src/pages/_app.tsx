@@ -6,9 +6,9 @@ export default function RootLayout ()
 {
   return (
     <Providers>
-      <main className='w-full pt-5'>
+      <section className='w-full pt-5'>
         <Outlet />
-      </main>
+      </section>
       <Toaster richColors position='top-center'/>
      </Providers>
   )
