@@ -8,26 +8,21 @@ import{
 	ReactElement,
 	JSXElementConstructor
 } from 'react'
-
-// Define Match Props
 interface MatchProps {
 	when:
 		| boolean
 		| ReactElement<unknown, string | JSXElementConstructor<any>>
-		| undefined // Condition to check
-	children: ReactNode // Content to render if the condition is true
+		| undefined 
+	children: ReactNode
 }
 
-// Match Component
 export const Match: FC<MatchProps> = ({ when, children }) =>
 	when ? <>{children}</> : null
 
-// Define Switch Props
 interface SwitchProps {
-	children: ReactNode // Multiple Match components
+	children: ReactNode 
 }
 
-// Switch Component
 export const Switch: FC<SwitchProps> = ({ children }) => {
 	const validCase = Children.toArray(children).find(
 		// @ts-ignore

@@ -1,4 +1,3 @@
-'use client'
 import { type FC } from 'react'
 import { useField } from 'formik'
 import { Input } from '@/shared/components/ui/input'

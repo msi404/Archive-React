@@ -1,5 +1,5 @@
-import {toast} from 'sonner'
-import { useDispatch } from 'react-redux';
+import { toast } from 'sonner'
+import { useDispatch } from 'react-redux'
 import { Button } from '@/shared/components/ui/button'
 import {
 	Avatar,
@@ -12,9 +12,9 @@ import {
 	SheetDescription,
 	SheetHeader,
 	SheetTitle,
-	SheetTrigger,
-} from "@/shared/components/ui/sheet"
- 
+	SheetTrigger
+} from '@/shared/components/ui/sheet'
+
 import { logout } from '@/shared/lib/features/authSlice'
 
 export function UserSetting({
@@ -34,30 +34,37 @@ export function UserSetting({
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button size="lg" className="md:h-8 md:p-0 cursor-pointer hover:scale-110" variant='link'>
+				<Button
+					size="lg"
+					className="md:h-8 md:p-0 cursor-pointer hover:scale-110"
+					variant="link"
+				>
 					<Avatar className="h-14 w-14 rounded-full border border-blue-900">
 						<AvatarImage src={user.avatar} alt={user.name} />
 						<AvatarFallback className="rounded-lg">CN</AvatarFallback>
 					</Avatar>
 				</Button>
 			</SheetTrigger>
-			<SheetContent side='left'>
+			<SheetContent side="left">
 				<SheetHeader>
 					<SheetTitle>اعدادات المستخدم</SheetTitle>
 					<SheetDescription>
-            يمكنك اجراء تعديلات في اعدادات المستخدم
-          </SheetDescription>
+						يمكنك اجراء تعديلات في اعدادات المستخدم
+					</SheetDescription>
 				</SheetHeader>
-				<div className='flex flex-col gap-8 justify-center items-center'>
-				<Avatar className="h-28 w-28 rounded-full border border-blue-900">
+				<div className="flex flex-col gap-8 justify-center items-center">
+					<Avatar className="h-28 w-28 rounded-full border border-blue-900">
 						<AvatarImage src={user.avatar} alt={user.name} />
 						<AvatarFallback className="rounded-lg">CN</AvatarFallback>
 					</Avatar>
-					<div className='flex flex-col items-center justify-center gap-2'>
-						<h1 className='font-bold text-xl'>{user.name}</h1>
-						<span className='text-gray-500'>{user.email}</span>
+					<div className="flex flex-col items-center justify-center gap-2">
+						<h1 className="font-bold text-xl">{user.name}</h1>
+						<span className="text-gray-500">{user.email}</span>
 					</div>
-					<Button onClick={onLogout} className='flex items-center justify-center gap-2 cursor-pointer'>
+					<Button
+						onClick={onLogout}
+						className="flex items-center justify-center gap-2 cursor-pointer"
+					>
 						<span>تسجيل الخروج</span>
 					</Button>
 				</div>

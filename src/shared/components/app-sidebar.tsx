@@ -1,5 +1,5 @@
-import {Link} from 'react-router'
-import { Icon } from '@iconify/react';
+import { Link } from 'react-router'
+import { Icon } from '@iconify/react'
 import {
 	Sidebar,
 	SidebarContent,
@@ -18,7 +18,7 @@ import { TatweerLogo } from '@/shared/components'
 
 export function AppSidebar() {
 	return (
-		<Sidebar className="dark" collapsible="icon" side="right" >
+		<Sidebar className="dark" collapsible="icon" side="right">
 			<SidebarHeader />
 			<SidebarContent>
 				<TatweerLogo />

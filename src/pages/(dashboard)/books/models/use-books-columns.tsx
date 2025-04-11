@@ -1,6 +1,6 @@
 import type { ReturnDocument } from '@/shared/api/archiveApi'
 import type { ColumnDef } from '@tanstack/react-table'
-import { TableColumnHeader } from '@/shared/components/column-header'
+// import { TableColumnHeader } from '@/shared/components/column-header'
 
 export const useBooksColumns = () =>
 {

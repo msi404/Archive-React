@@ -8,9 +8,7 @@ export const Providers: FC<{ children: ReactNode }> = ({ children }) => {
 	return (
 		<Provider store={store}>
 			<DirectionProvider dir="rtl">
-				<Protected>
-				{children}
-				</Protected>
+				<Protected>{children}</Protected>
 			</DirectionProvider>
 		</Provider>
 	)

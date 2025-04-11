@@ -5,7 +5,7 @@ import { Routes } from '@generouted/react-router'
 export default function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>جاري التحميل...</div>}>
         <Routes />
       </Suspense>
     </BrowserRouter>
