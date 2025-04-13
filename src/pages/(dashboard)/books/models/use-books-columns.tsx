@@ -1,15 +1,27 @@
-import type { ReturnDocument } from '@/shared/api/archiveApi'
+import { useMemo } from 'react'
+import type { ReturnDocument } from '@/shared/api/archiveApi';
+import { Input } from '@/shared/components/ui/input';
 import type { ColumnDef } from '@tanstack/react-table'
 // import { TableColumnHeader } from '@/shared/components/column-header'
 
 export const useBooksColumns = () =>
 {
 	
-const booksColumns: ColumnDef<ReturnDocument>[] = [
+const booksColumns: ColumnDef<ReturnDocument>[] = useMemo<ColumnDef<ReturnDocument>[]>(() => [
 	{
 		accessorKey: 'titleName',
-		header: 'الموضوع'
-	},
+		header: ({ column }) => (
+			<div className="flex flex-col gap-1">
+			  <span>الموضوع</span>
+			  <Input
+				 placeholder="ابحث..."
+				 className="h-8"
+				 value={(column.getFilterValue() ?? '') as string}
+				 onChange={(e) => column.setFilterValue(e.target.value)}
+			  />
+			</div>
+		 )
+	  },
 	{
 		accessorKey: 'bookKind',
 		header: 'تصنيف الكتاب'
@@ -24,8 +36,18 @@ const booksColumns: ColumnDef<ReturnDocument>[] = [
 	},
 	{
 		accessorKey: 'concernedPerson',
-		header: 'الشخص المعني'
-	},
+		header: ({ column }) => (
+			<div className="flex flex-col gap-1">
+			  <span>الشخص المعني</span>
+			  <Input
+				 placeholder="ابحث..."
+				 className="h-8"
+				 value={(column.getFilterValue() ?? '') as string}
+				 onChange={(e) => column.setFilterValue(e.target.value)}
+			  />
+			</div>
+		 )
+	  },
 	{
 		accessorKey: 'referencePerson',
 		header: 'المعرف'
@@ -62,7 +84,7 @@ const booksColumns: ColumnDef<ReturnDocument>[] = [
 		accessorKey: 'point',
 		header: 'اضيف بواسطة'
 	}
-]
+], [])
 	
 	return {
 		booksColumns

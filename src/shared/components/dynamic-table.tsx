@@ -10,7 +10,9 @@ import {
 	TableHeader,
 	TableRow
 } from '@/shared/components/ui/table'
-// import {TableViewOptions} from '@/shared/components/table-view-options'
+ 
+import { Button } from '@/shared/components/ui/button'
+import {TableViewOptions} from '@/shared/components/table-view-options'
 import { For } from '@/shared/components/utils/for'
 import { Show } from '@/shared/components/utils/show'
 
@@ -21,8 +23,8 @@ interface DynamicTableProps {
 export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 	return (
 		<Fragment>
-			{/* <TableViewOptions table={table}/> */}
-			<div className="overflow-hidden border w-[1130px] mx-auto max-w-full rounded-xl shadow-2xl">
+			<TableViewOptions table={table}/>
+			<div className="border">
 				<Table>
 					<TableHeader className="bg-secondary">
 						<For each={table.getHeaderGroups()}>
@@ -78,6 +80,31 @@ export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 						</Show>
 					</TableBody>
 				</Table>
+
+				<div className="flex justify-between items-center p-4">
+					<div>
+						<Button variant="ghost">
+							صفحة {table.getState().pagination.pageIndex + 1} من{' '}
+							{table.getPageCount()}
+						</Button>
+					</div>
+					<div className="flex gap-2">
+						<Button
+							variant="outline"
+							onClick={() => table.previousPage()}
+							disabled={!table.getCanPreviousPage()}
+						>
+							السابق
+						</Button>
+						<Button
+							variant="outline"
+							onClick={() => table.nextPage()}
+							disabled={!table.getCanNextPage()}
+						>
+							التالي
+						</Button>
+					</div>
+				</div>
 			</div>
 		</Fragment>
 	)
