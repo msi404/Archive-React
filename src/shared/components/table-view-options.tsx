@@ -49,7 +49,7 @@ export function TableViewOptions<TData>({
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
 							onCheckedChange={(value: any) => column.toggleVisibility(!!value)}
 						>
-							{column.id}
+							{column.columnDef.meta?.label}
 						</DropdownMenuCheckboxItem>
 					)}
 				</For>

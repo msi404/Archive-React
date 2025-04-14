@@ -1,88 +1,127 @@
 import { useMemo } from 'react'
 import type { ReturnDocument } from '@/shared/api/archiveApi';
-import { Input } from '@/shared/components/ui/input';
 import type { ColumnDef } from '@tanstack/react-table'
-// import { TableColumnHeader } from '@/shared/components/column-header'
+import { TableColumnHeader } from '@/shared/components/column-header'
 
 export const useBooksColumns = () =>
 {
 	
 const booksColumns: ColumnDef<ReturnDocument>[] = useMemo<ColumnDef<ReturnDocument>[]>(() => [
 	{
+		//review
 		accessorKey: 'titleName',
 		header: ({ column }) => (
-			<div className="flex flex-col gap-1">
-			  <span>الموضوع</span>
-			  <Input
-				 placeholder="ابحث..."
-				 className="h-8"
-				 value={(column.getFilterValue() ?? '') as string}
-				 onChange={(e) => column.setFilterValue(e.target.value)}
-			  />
-			</div>
-		 )
+			<TableColumnHeader column={column} title="الموضوع" />
+		),
+		enableSorting: true,
+		meta: {
+			label: 'الموضوع'
+		 }
 	  },
 	{
 		accessorKey: 'bookKind',
-		header: 'تصنيف الكتاب'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="تصنيف الكتاب" />
+		),		meta: {
+			label: 'تصنيف الكتاب'
+		 }
 	},
 	{
 		accessorKey: 'type',
-		header: 'نوع الكتاب'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="نوع الكتاب" />
+		),		meta: {
+			label: 'نوع الكتاب'
+		 }
 	},
 	{
 		accessorKey: 'destinationName',
-		header: 'من / الى'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="من / الى" />
+		),		meta: {
+			label: 'من / الى'
+		 }
 	},
 	{
+		//review
 		accessorKey: 'concernedPerson',
 		header: ({ column }) => (
-			<div className="flex flex-col gap-1">
-			  <span>الشخص المعني</span>
-			  <Input
-				 placeholder="ابحث..."
-				 className="h-8"
-				 value={(column.getFilterValue() ?? '') as string}
-				 onChange={(e) => column.setFilterValue(e.target.value)}
-			  />
-			</div>
-		 )
+			<TableColumnHeader column={column} title="الشخص المعني" />
+		),		meta: {
+			label: 'الشخص المعني'
+		 }
 	  },
 	{
 		accessorKey: 'referencePerson',
-		header: 'المعرف'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="المعرف" />
+		),		meta: {
+			label: 'المعرف'
+		 }
 	},
 	{
 		accessorKey: 'point',
-		header: 'الجهة'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="الجهة" />
+		),		meta: {
+			label: 'الجهة'
+		 }
 	},
 	{
 		accessorKey: 'documentAttachmentsCount',
-		header: 'المرفقات'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="المرفقات" />
+		),		meta: {
+			label: 'المرفقات'
+		 }
 	},
 	{
 		accessorKey: 'internalIncoming',
-		header: 'رقم الوارد الداخلي'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="رقم الوارد الداخلي" />
+		),		meta: {
+			label: 'رقم الوارد الداخلي'
+		 }
 	},
 	{
 		accessorKey: 'internalIncomingDate',
-		header: 'تاريخ الوارد الداخلي'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="تاريخ الوارد الداخلي" />
+		),		meta: {
+			label: 'تاريخ الوارد الداخلي'
+		 }
 	},
 	{
 		accessorKey: 'number',
-		header: 'العدد'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="العدد" />
+		),		meta: {
+			label: 'العدد'
+		 }
 	},
 	{
 		accessorKey: 'date',
-		header: 'تاريخ الكتاب'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="تاريخ الكتاب" />
+		),		meta: {
+			label: 'تاريخ الكتاب'
+		 }
 	},
 	{
 		accessorKey: 'created',
-		header: 'تاريخ الانشاء'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="تاريخ الانشاء" />
+		),		meta: {
+			label: 'تاريخ الانشاء'
+		 }
 	},
 	{
 		accessorKey: 'point',
-		header: 'اضيف بواسطة'
+		header: ({ column }) => (
+			<TableColumnHeader column={column} title="اضيف بواسطة" />
+		),		meta: {
+			label: 'اضيف بواسطة'
+		 }
 	}
 ], [])
 	

@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
 	type ColumnFiltersState,
 	useReactTable,
 	getCoreRowModel,
-	getFilteredRowModel
+	getFilteredRowModel,
+	getSortedRowModel,
+	SortingState
 } from '@tanstack/react-table'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
 import { useBooksColumns } from '@/pages/(dashboard)/books/models'
 
 export const useBooksTable = (data: ReturnDocument[], pageCount: number) => {
 	const { booksColumns } = useBooksColumns()
+	const [sorting, setSorting] = useState<SortingState>([])
 	const [pagination, setPagination] = useState({
 		pageIndex: 0,
 		pageSize: 10
@@ -22,16 +25,23 @@ export const useBooksTable = (data: ReturnDocument[], pageCount: number) => {
 		pageCount,
 		state: {
 			pagination,
-			columnFilters
+			columnFilters,
+			sorting
 		},
+		onSortingChange: setSorting,
 		onPaginationChange: setPagination,
 		onColumnFiltersChange: setColumnFilters,
 		manualPagination: true,
 		manualFiltering: true,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 		renderFallbackValue: <h1>لا يوجد</h1>
-	})
+	} )
+	
+	useEffect(() => {
+		setPagination(prev => ({ ...prev, pageIndex: 0 }))
+	 }, [columnFilters])
 
 	return { table, pagination, columnFilters }
 }
