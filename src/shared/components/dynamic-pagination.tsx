@@ -31,31 +31,33 @@ export const DynamicPagination = <T,>({
 
 	const startItem = pageIndex * pageSize + 1
 	const endItem = Math.min((pageIndex + 1) * pageSize, total)
-	const maxVisiblePages = 5
 
 	const generatePageRange = () => {
-		if (pageCount <= maxVisiblePages) {
-			return [...Array(pageCount).keys()]
+		const totalPages = pageCount
+		const current = pageIndex
+		const delta = 2
+		const range: (number | -1)[] = []
+
+		const left = Math.max(0, current - delta)
+		const right = Math.min(totalPages - 1, current + delta)
+
+		if (left > 0) {
+			range.push(0)
+			if (left > 1) range.push(-1)
 		}
 
-		const range = []
-		const left = Math.max(0, pageIndex - 1)
-		const right = Math.min(pageCount - 1, pageIndex + 1)
-
-		if (left > 1) range.push(0, -1)
-		else range.push(...[...Array(left + 1).keys()])
-
-		range.push(...Array.from({ length: right - left + 1 }, (_, i) => left + i))
-
-		if (right < pageCount - 2) range.push(-1, pageCount - 1)
-		else {
-			const remaining = [...Array(pageCount - right - 1).keys()].map(
-				(i) => right + 1 + i
-			)
-			range.push(...remaining)
+		for (let i = left; i <= right; i++) {
+			range.push(i)
 		}
+
+		if (right < totalPages - 1) {
+			if (right < totalPages - 2) range.push(-1)
+			range.push(totalPages - 1)
+		}
+
 		return range
 	}
+
 	const pages = generatePageRange()
 
 	return (
@@ -74,30 +76,31 @@ export const DynamicPagination = <T,>({
 								table.getCanPreviousPage()
 									? ''
 									: 'pointer-events-none opacity-50'
-							} />
-							</PaginationItem>
+							}
+						/>
+					</PaginationItem>
 
-						<For each={pages}>
-							{(page, index) => (
-								<Show
-									when={page !== -1}
-									fallback={
-										<PaginationItem key={index} className="px-2">
-											...
-										</PaginationItem>
-									}
-								>
-									<PaginationItem>
-										<PaginationLink
-											onClick={() => table.setPageIndex(page)}
-											isActive={pageIndex === index}
-										>
-											{page + 1}
-										</PaginationLink>
+					<For each={pages}>
+						{(page, index) => (
+							<Show
+								when={page !== -1}
+								fallback={
+									<PaginationItem key={index} className="px-2">
+										...
 									</PaginationItem>
-								</Show>
-							)}
-						</For>
+								}
+							>
+								<PaginationItem>
+									<PaginationLink
+										onClick={() => table.setPageIndex(page)}
+										isActive={pageIndex === page}
+									>
+										{page + 1}
+									</PaginationLink>
+								</PaginationItem>
+							</Show>
+						)}
+					</For>
 					<PaginationItem>
 						<PaginationNext
 							onClick={() => table.nextPage()}

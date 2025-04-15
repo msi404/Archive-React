@@ -44,7 +44,7 @@ export function AppSidebar() {
 													icon={item.icon}
 													width={24}
 													height={24}
-													color={pathname === item.url ? 'lightblue' : ''}
+													color={pathname === item.url ? 'blue' : ''}
 												/>
 												<span className="text-accent-foreground/60 font-bold">
 													{item.title}

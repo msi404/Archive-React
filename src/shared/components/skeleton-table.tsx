@@ -20,9 +20,8 @@ export const SkeletonTable = () => {
     <Container>
       <Card className="p-4 shadow-xl border">
         <CardContent className="flex flex-col lg:flex-row gap-5 justify-between">
-          <div className="lg:w-1/2 flex flex-col lg:flex-row gap-5">
+          <div className="flex flex-col w-full lg:flex-row gap-5">
             <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-9 px-4 py-2 w-full lg:w-24" />
           </div>
         </CardContent>
         <Container>

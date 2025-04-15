@@ -1,4 +1,4 @@
-import { useBooks } from '@/pages/(dashboard)/books/models'
+import { useUsers } from '@/pages/(dashboard)/users/models'
 import { Icon } from '@iconify/react'
 import { Button } from '@/shared/components/ui/button'
 import {
@@ -14,9 +14,9 @@ import { FilterDialog } from '@/shared/components/filter-dialog'
 import { TableViewOptions } from '@/shared/components/table-view-options'
 import { Switch, Match } from '@/shared/components/utils/switch'
 
-export default function BooksPage() {
+export default function SharePage() {
 	const { isError, isFetching, isLoading, isSuccess, refetch, table, total } =
-		useBooks()
+		useUsers()
 
 	return (
 		<Switch>

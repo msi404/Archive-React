@@ -22,7 +22,7 @@ interface DynamicTableProps {
 export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 	return (
 		<Fragment>
-			<div className='border rounded-lg overflow-hidden'>
+			<div className='border rounded-lg overflow-hidden shadow'>
 				<Table className='rounded-lg overflow-hidden'>
 					<TableHeader className="bg-secondary">
 						<For each={table.getHeaderGroups()}>
@@ -58,7 +58,7 @@ export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 							<For each={table.getRowModel().rows}>
 								{(row: any) => (
 									<TableRow
-										className="even:bg-slate-50 dark:even:bg-slate-900 rounded-lg border-none"
+										className="even:bg-slate-50 border-b dark:even:bg-slate-900 h-16 rounded-lg"
 										key={row.id}
 										data-state={row.getIsSelected() && 'selected'}
 									>

@@ -9,6 +9,7 @@ import {
 	DialogFooter,
 	DialogClose
 } from '@/shared/components/ui/dialog'
+import {Separator} from '@/shared/components/ui/separator'
 import { Label } from '@/shared/components/ui/label'
 import { Input } from '@/shared/components/ui/input'
 import { Button } from '@/shared/components/ui/button'
@@ -34,6 +35,7 @@ export const FilterDialog = <TData,>({
 				<DialogHeader className="mx-auto">
 					<DialogTitle>تصفية</DialogTitle>
 				</DialogHeader>
+				<Separator />
 				<div className="grid gap-4 py-6">
 					<div className="grid md:grid-cols-2 gap-4">
 						<For each={filteredColumns}>
@@ -53,6 +55,7 @@ export const FilterDialog = <TData,>({
 						</For>
 					</div>
 				</div>
+          <Separator/>
 				<DialogFooter>
 					<DialogClose className="w-full">
 						<Button className="w-full">تأكيد</Button>

@@ -35,7 +35,7 @@ export function TableViewOptions<TData>({
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[150px]">
-				<DropdownMenuLabel>تفعيل العواميد</DropdownMenuLabel>
+				<DropdownMenuLabel>العواميد المفعلة</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<For each={columns}>
 					{(column) => (
