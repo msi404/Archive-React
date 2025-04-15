@@ -29,9 +29,6 @@ export function TableViewOptions<TData>({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button
-					variant="outline"
-					size="sm"
-					className="ml-auto hidden h-8 lg:flex"
 				>
 					<Icon icon="solar:settings-bold-duotone" width={40} />
 					اظهار
@@ -49,7 +46,7 @@ export function TableViewOptions<TData>({
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
 							onCheckedChange={(value: any) => column.toggleVisibility(!!value)}
 						>
-							{column.columnDef.meta?.label}
+							{(column.columnDef.meta as { label?: string })?.label}
 						</DropdownMenuCheckboxItem>
 					)}
 				</For>

@@ -122,7 +122,7 @@ const injectedRtkApi = api.injectEndpoints({
 				method: 'POST',
 				body: queryArg.createDocument
 			})
-		}),
+		} ),
 		getApiDocument: build.query<
 			GetApiDocumentApiResponse,
 			GetApiDocumentApiArg

@@ -21,7 +21,7 @@ export function AppSidebar() {
 	const location = useLocation()
 	const pathname = location.pathname
 	return (
-		<Sidebar className="dark" collapsible="icon" side="right">
+		<Sidebar  collapsible="icon" side="right">
 			<SidebarHeader />
 			<SidebarContent>
 				<TatweerLogo />

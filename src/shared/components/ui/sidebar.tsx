@@ -271,7 +271,7 @@ function SidebarTrigger({
 			}}
 			{...props}
 		>
-			<Icon className='!w-8 !h-8' icon='solar:sidebar-minimalistic-bold-duotone' width={24} height={24} />
+			<Icon className='!w-8 !h-8 text-primary' icon='solar:sidebar-minimalistic-bold-duotone' width={24} height={24} />
 			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
 	)

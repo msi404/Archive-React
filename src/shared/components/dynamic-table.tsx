@@ -12,7 +12,6 @@ import {
 } from '@/shared/components/ui/table'
  
 import { Button } from '@/shared/components/ui/button'
-import {TableViewOptions} from '@/shared/components/table-view-options'
 import { For } from '@/shared/components/utils/for'
 import { Show } from '@/shared/components/utils/show'
 
@@ -23,9 +22,8 @@ interface DynamicTableProps {
 export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 	return (
 		<Fragment>
-			<TableViewOptions table={table}/>
-			<div className="border">
-				<Table>
+			<div className='border rounded-lg overflow-hidden'>
+				<Table className='rounded-lg overflow-hidden'>
 					<TableHeader className="bg-secondary">
 						<For each={table.getHeaderGroups()}>
 							{(headerGroup: any) => (

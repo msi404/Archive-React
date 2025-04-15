@@ -72,8 +72,8 @@ function PaginationPrevious({
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
-      <Icon icon='solar:alt-arrow-left-line-duotone' />
-      <span className="hidden sm:block">Previous</span>
+      <Icon icon='solar:alt-arrow-right-line-duotone' />
+      <span className="hidden sm:block">السابق</span>
     </PaginationLink>
   )
 }
@@ -89,8 +89,8 @@ function PaginationNext({
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
-      <Icon icon='solar:alt-arrow-right-line-duotone'/>
+      <span className="hidden sm:block">التالي</span>
+      <Icon icon='solar:alt-arrow-left-line-duotone'/>
     </PaginationLink>
   )
 }
