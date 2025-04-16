@@ -17,8 +17,8 @@
 + ✅ **Iconify icons**
 + ✅ **Feature-Sliced-Design architecture**
 + ✅ **OpenApi generator**
-+ ✅ **Casl based authorization system**
-+ ✅ **JWT based authentication system**
++ ✅ **Casl authorization**
++ ✅ **JWT authentication**
 
 ![screenshot of the system](/public/screenshot-2.png)
 ---
