@@ -36,7 +36,7 @@ export function UserSetting({
 			<SheetTrigger asChild>
 				<Button
 					size="lg"
-					className="md:h-8 md:p-0 cursor-pointer hover:scale-110"
+					className="md:h-8 md:p-0 cursor-pointer hover:scale-110 z-10"
 					variant="link"
 				>
 					<Avatar className="h-14 w-14 rounded-full border border-blue-900">

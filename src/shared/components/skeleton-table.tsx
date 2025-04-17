@@ -18,7 +18,7 @@ export const SkeletonTable = () => {
   ];
   return (
     <Container>
-      <Card className="p-4 shadow-xl border">
+      <Card className="p-4 shadow border rounded-none">
         <CardContent className="flex flex-col lg:flex-row gap-5 justify-between">
           <div className="flex flex-col w-full lg:flex-row gap-5">
             <Skeleton className="h-8 w-full" />

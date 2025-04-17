@@ -1,6 +1,4 @@
-import { useBooks } from '@/pages/(dashboard)/books/models'
-import { Icon } from '@iconify/react'
-import { Button } from '@/shared/components/ui/button'
+import { useBooks} from '@/pages/(dashboard)/books/models'
 import {
 	Card,
 	CardHeader,
@@ -11,14 +9,15 @@ import { SkeletonTable } from '@/shared/components/skeleton-table'
 import { DynamicPagination } from '@/shared/components/dynamic-pagination'
 import { DynamicTable } from '@/shared/components'
 import { FilterDialog } from '@/shared/components/filter-dialog'
+import {Retry} from '@/shared/components/retry'
 import { TableViewOptions } from '@/shared/components/table-view-options'
 import { Switch, Match } from '@/shared/components/utils/switch'
 
-export default function BooksPage() {
+export default function BooksPage ()
+{
 	const { isError, isFetching, isLoading, isSuccess, refetch, table, total } =
 		useBooks()
-
-	return (
+		return (
 		<Switch>
 			<Match when={isSuccess}>
 				<Card className="space-y-4 overflow-hidden w-[1130px] mx-auto max-w-full shadow-xl border">
@@ -26,16 +25,13 @@ export default function BooksPage() {
 						<div className="flex gap-3">
 							<FilterDialog columns={table.getAllColumns()} />
 							<TableViewOptions table={table} />
-							<Button onClick={refetch}>
-								<Icon icon="solar:repeat-bold-duotone" />
-								<span>اعادة التحميل</span>
-							</Button>
+							<Retry refetch={refetch}/>
 						</div>
 					</CardHeader>
 					<CardContent>
 						<Switch>
 							<Match when={!isFetching}>
-								<DynamicTable table={table} />
+									<DynamicTable table={ table } />
 							</Match>
 							<Match when={isFetching}>
 								<SkeletonTable />

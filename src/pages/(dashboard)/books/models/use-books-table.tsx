@@ -5,13 +5,13 @@ import {
 	getCoreRowModel,
 	getFilteredRowModel,
 	getSortedRowModel,
-	SortingState
+	SortingState,
 } from '@tanstack/react-table'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
-import { useBooksColumns } from '@/pages/(dashboard)/books/models'
 
-export const useBooksTable = (data: ReturnDocument[], pageCount: number) => {
-	const { booksColumns } = useBooksColumns()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useBooksTable = ( data: ReturnDocument[], pageCount: number, columns: any ) =>
+{
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [pagination, setPagination] = useState({
 		pageIndex: 0,
@@ -19,9 +19,15 @@ export const useBooksTable = (data: ReturnDocument[], pageCount: number) => {
 	})
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
-	const table = useReactTable({
+	const table = useReactTable( {
+		initialState: {
+			columnPinning: {
+			  left: [],
+			  right: ['actions'],
+			},
+		 },
 		data,
-		columns: booksColumns,
+		columns,
 		pageCount,
 		state: {
 			pagination,

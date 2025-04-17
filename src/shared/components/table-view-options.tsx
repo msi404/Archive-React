@@ -29,6 +29,7 @@ export function TableViewOptions<TData>({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button
+					variant='outline'
 				>
 					<Icon icon="solar:settings-bold-duotone" width={40} />
 					اظهار

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { FC } from 'react'
+import type { CSSProperties, FC } from 'react'
 import { Fragment } from 'react'
 import { flexRender } from '@tanstack/react-table'
 import {
@@ -19,18 +19,50 @@ interface DynamicTableProps {
 	table: any
 }
 
-export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
+export const DynamicTable: FC<DynamicTableProps> = ( { table } ) =>
+{
+	
+	const getCommonPinningStyles = (column: any): CSSProperties => {
+		const isPinned = column.getIsPinned()
+	
+		const isLastLeftPinnedColumn =
+			isPinned === 'left' && column.getIsLastColumn('left')
+		const isFirstRightPinnedColumn =
+			isPinned === 'right' && column.getIsFirstColumn('right')
+	
+		return {
+			boxShadow: isLastLeftPinnedColumn
+				? '4px 0 4px -4px gray inset'
+				: isFirstRightPinnedColumn
+				? '-4px 0 4px -4px gray inset'
+				: undefined,
+	
+			left:
+				isPinned === 'right'
+					? `${column.getStart('right')}px`
+					: isPinned === 'left'
+					? `${column.getStart('left')}px`
+					: undefined,
+	
+			position: isPinned ? 'sticky' : 'relative',
+			width: column.getSize(),
+			zIndex: isPinned ? 5 : 'auto',
+			background: 'white',
+			opacity: isPinned ? 0.98 : 1
+		}
+	}
+	
 	return (
 		<Fragment>
-			<div className='border rounded-lg overflow-hidden shadow'>
-				<Table className='rounded-lg overflow-hidden'>
+			<div className='border shadow relative overflow-x-scroll'>
+				<Table style={{width: table.getTotalSize()}}>
 					<TableHeader className="bg-secondary">
 						<For each={table.getHeaderGroups()}>
 							{(headerGroup: any) => (
 								<TableRow key={headerGroup.id}>
 									<For each={headerGroup.headers}>
 										{(header: any) => (
-											<TableHead className="text-start" key={header.id}>
+											<TableHead style={{...getCommonPinningStyles(header.column)}} className="text-start" key={header.id}>
 												<Show when={!header.isPlaceholder} fallback={null}>
 													{flexRender(
 														header.column.columnDef.header,
@@ -58,13 +90,13 @@ export const DynamicTable: FC<DynamicTableProps> = ({ table }) => {
 							<For each={table.getRowModel().rows}>
 								{(row: any) => (
 									<TableRow
-										className="even:bg-slate-50 border-b dark:even:bg-slate-900 h-16 rounded-lg"
+										className="border-b even:bg-slate-50 dark:even:bg-slate-900 h-16 rounded-lg"
 										key={row.id}
 										data-state={row.getIsSelected() && 'selected'}
 									>
 										<For each={row.getVisibleCells()}>
 											{(cell: any) => (
-												<TableCell key={cell.id}>
+												<TableCell style={{...getCommonPinningStyles(cell.column)}} key={cell.id}>
 													{flexRender(
 														cell.column.columnDef.cell,
 														cell.getContext()

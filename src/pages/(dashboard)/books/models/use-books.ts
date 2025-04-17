@@ -1,13 +1,14 @@
-import { useGetApiDocumentQuery } from '@/shared/api/archiveApi'
-import { useBooksTable } from '@/pages/(dashboard)/books/models'
+import { useGetApiDocumentQuery } from '@/shared/api/archiveApiEnhance'
+import { useBooksTable, useBooksColumns } from '@/pages/(dashboard)/books/models'
 
 export const useBooks = () =>
 {
+	const { booksColumns } = useBooksColumns()
 	const {
 		table,
 		pagination: { pageIndex, pageSize },
 		columnFilters
-	} = useBooksTable([], 0)
+	} = useBooksTable([], 0, booksColumns)
 
 	const filters = columnFilters.reduce(
 		( acc, curr ) =>

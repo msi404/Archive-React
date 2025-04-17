@@ -26,7 +26,7 @@ export const FilterDialog = <TData,>({ columns }: FilterDialogProps<TData>) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button>
+				<Button variant='outline'>
 					<Icon icon="solar:filter-bold-duotone" />
 					<span>تصفية</span>
 				</Button>
@@ -72,12 +72,12 @@ function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TData>) {
 
 	return (
 		<div>
-			<Label className="text-sm font-medium">{label}</Label>
+			<Label className="text-sm font-bold">{label}</Label>
 			<Input
 				value={inputValue}
 				onChange={(e) => setInputValue(e.target.value)}
 				placeholder={label}
-				className="mt-1"
+				className="mt-1 shadow"
 			/>
 		</div>
 	)

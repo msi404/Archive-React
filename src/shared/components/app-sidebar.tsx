@@ -21,7 +21,7 @@ export function AppSidebar() {
 	const location = useLocation()
 	const pathname = location.pathname
 	return (
-		<Sidebar  collapsible="icon" side="right">
+		<Sidebar collapsible="icon" side="right">
 			<SidebarHeader />
 			<SidebarContent>
 				<TatweerLogo />
@@ -41,10 +41,13 @@ export function AppSidebar() {
 											>
 												<Icon
 													className="!w-6 !h-6 text-primary"
-													icon={item.icon}
+													icon={
+														pathname === item.url
+															? item.icon.replace('line', 'bold')
+															: item.icon
+													}
 													width={24}
 													height={24}
-													color={pathname === item.url ? 'blue' : ''}
 												/>
 												<span className="text-accent-foreground/60 font-bold">
 													{item.title}
