@@ -105,7 +105,9 @@ export const useBooksColumns = () =>
 						</Badge>
 				),
 				meta: {
-					label: 'الجهة'
+					label: 'الجهة',
+					filterType: 'select',
+					options: ["one", 'two']
 				}
 			},
 			{
@@ -115,7 +117,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.documentAttachmentsCount ?? 'لا يوجد',
 				meta: {
-					label: 'المرفقات'
+					label: 'المرفقات',
+					filterType: 'number'
 				}
 			},
 			{
@@ -155,7 +158,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.date ?? 'لا يوجد',
 				meta: {
-					label: 'تاريخ الكتاب'
+					label: 'تاريخ الكتاب',
+					filterType: 'date'
 				}
 			},
 			{
@@ -198,6 +202,7 @@ export const useBooksColumns = () =>
 				}
 			}
 		],
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	)
 
