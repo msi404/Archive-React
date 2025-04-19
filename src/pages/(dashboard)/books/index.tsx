@@ -21,7 +21,7 @@ import { Show } from '@/shared/components/utils/show'
 export default function BooksPage() {
 	const { isError, isFetching, isLoading, isSuccess, refetch, table, total } =
 		useBooks()
-	const { pinned, setPinned } = usePinnedColumnsInputs(table)
+	const { pinned, setPinned, savePinnedColumns } = usePinnedColumnsInputs(table)
 	const filteredColumns = table
 		.getAllColumns()
 		.filter((col) => col.getCanFilter())
@@ -37,7 +37,8 @@ export default function BooksPage() {
 						</div>
 						<PinnedColumnsInputs
 							pinned={pinned}
-							setPinned={setPinned}
+							setPinned={ setPinned }
+							savePinnedColumns={savePinnedColumns}
 							table={table}
 						/>
 						<div className="flex flex-wrap gap-3">

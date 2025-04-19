@@ -23,7 +23,11 @@ export const DeleteDialog: FC<{action: () => void, isLoading: boolean}> = ({acti
 				</DialogHeader>
 				<DialogFooter className="flex justify-between">
 					<Button disabled={isLoading} variant="destructive" onClick={action}>حذف</Button>
-					<DialogClose>الغاء</DialogClose>
+					<DialogClose>
+						<Button variant='outline'>
+						الغاء
+						</Button>
+					</DialogClose>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

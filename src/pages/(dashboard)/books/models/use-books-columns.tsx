@@ -56,7 +56,9 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => (row.type === 1 ? 'وارد' : 'صادر'),
 				meta: {
-					label: 'نوع الكتاب'
+					label: 'نوع الكتاب',
+					filterable: false,
+					pinnable: false
 				}
 			},
 			{
@@ -107,8 +109,6 @@ export const useBooksColumns = () =>
 				),
 				meta: {
 					label: 'الجهة',
-					filterType: 'select',
-					options: ["one", 'two']
 				}
 			},
 			{
@@ -139,7 +139,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.internalIncomingDate ?? 'لا يوجد',
 				meta: {
-					label: 'تاريخ الوارد الداخلي'
+					label: 'تاريخ الوارد الداخلي',
+					filterType: 'date'
 				}
 			},
 			{
@@ -199,7 +200,9 @@ export const useBooksColumns = () =>
 					)
 				},
 				meta: {
-					label: 'الاجرائات'
+					label: 'الاجرائات',
+					filterable: false,
+					pinnable: false
 				}
 			}
 		],

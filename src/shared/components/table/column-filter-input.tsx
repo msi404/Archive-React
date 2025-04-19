@@ -22,6 +22,7 @@ type FilterType = 'text' | 'select' | 'date' | 'number'
 interface ColumnMeta {
 	label?: string
 	filterType?: FilterType
+	filterable: boolean
 	options?: string[]
 }
 
@@ -42,7 +43,9 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 
 	useEffect(() => {
 		column.setFilterValue(debounced)
-	}, [column, debounced])
+	}, [ column, debounced ] )
+	
+	if (meta?.filterable === false) return null
 
 	return (
 		<div>

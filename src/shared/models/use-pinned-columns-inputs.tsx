@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {useState} from 'react'
-import type { Column } from '@tanstack/react-table'
+import { useState } from 'react'
+import { loadPinnedColumns, savePinnedColumns } from '@/shared/lib/storage'
+
 
 export const usePinnedColumnsInputs = (table: any) =>
 {
 	const [pinned, setPinned] = useState<Record<string, boolean>>(() => {
-		 const initial: Record<string, boolean> = {}
-		table.getAllColumns().forEach( ( col: Column<any, any> ) =>
-		{
-			 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			 //@ts-expect-error
-			if (col.columnDef.meta?.pinned) initial[col.id] = true
-		 })
-		 return initial
-	} )
+		const stored = loadPinnedColumns()
+		const initial: Record<string, boolean> = {}
+		table.getAllColumns().forEach((col: any) => {
+			initial[col.id] = stored[col.id] ?? col.columnDef.meta?.pinned ?? false
+		})
+		return initial
+	})
+	
 	
 	return {
 		pinned,
-		setPinned
+		setPinned,
+		savePinnedColumns
 	}
 }

@@ -8,10 +8,12 @@ import {
 	SortingState,
 } from '@tanstack/react-table'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
+import { loadColumnVisibility, saveColumnVisibility } from '@/shared/lib/storage'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useBooksTable = ( data: ReturnDocument[], pageCount: number, columns: any ) =>
 {
+	const [columnVisibility, setColumnVisibility] = useState(() => loadColumnVisibility())
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [pagination, setPagination] = useState({
 		pageIndex: 0,
@@ -32,18 +34,25 @@ export const useBooksTable = ( data: ReturnDocument[], pageCount: number, column
 		state: {
 			pagination,
 			columnFilters,
-			sorting
+			sorting,
+			columnVisibility
 		},
 		onSortingChange: setSorting,
 		onPaginationChange: setPagination,
 		onColumnFiltersChange: setColumnFilters,
 		manualPagination: true,
 		manualFiltering: true,
+		onColumnVisibilityChange: setColumnVisibility,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		renderFallbackValue: <h1>لا يوجد</h1>
 	} )
+
+	useEffect(() => {
+		saveColumnVisibility(columnVisibility)
+	}, [columnVisibility])
+	
 	
 	useEffect(() => {
 		setPagination(prev => ({ ...prev, pageIndex: 0 }))
