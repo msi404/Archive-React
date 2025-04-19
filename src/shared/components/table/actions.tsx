@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { Button } from '@/shared/components/ui/button'
-import { DeleteDialog } from '@/shared/components/delete-dialog'
+import { DeleteDialog } from '@/shared/components/table/delete-dialog'
 export const Actions: FC<{
 	action: () => void
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

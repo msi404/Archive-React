@@ -9,4 +9,4 @@ export { Show } from '@/shared/components/utils/show';
 export { Switch } from '@/shared/components/utils/switch';
 export { Protected } from '@/shared/components/utils/protected';
 export { Container } from '@/shared/components/container';
-export {DynamicTable} from '@/shared/components/dynamic-table'
+export {DynamicTable} from '@/shared/components/table/dynamic-table'

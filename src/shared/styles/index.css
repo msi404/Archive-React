@@ -123,3 +123,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+body[data-scroll-locked="1"] {
+	pointer-events: auto !important;
+}
+

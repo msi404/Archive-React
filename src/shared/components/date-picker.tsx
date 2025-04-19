@@ -31,8 +31,8 @@ export const DatePicker: FC<{
 					{value ? format(value, 'PPP') : <span>تاريخ الميلاد</span>}{' '}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent>
-				<Calendar
+			<PopoverContent >
+			<Calendar
 					disabled={disabled}
 					mode="single"
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment

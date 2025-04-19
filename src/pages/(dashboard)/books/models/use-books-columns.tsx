@@ -2,10 +2,10 @@ import { useMemo } from 'react'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
 import type { ColumnDef } from '@tanstack/react-table'
 import {useDelete} from '@/pages/(dashboard)/books/models/use-delete'
-import { TableColumnHeader } from '@/shared/components/column-header'
+import { TableColumnHeader } from '@/shared/components/table/column-header'
 import { Badge } from '@/shared/components/ui/badge'
 import { Show } from '@/shared/components/utils/show'
-import { Actions } from '@/shared/components/actions'
+import { Actions } from '@/shared/components/table/actions'
 
 export const useBooksColumns = () =>
 {
@@ -21,7 +21,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.titleName ?? 'لا يوجد',
 				meta: {
-					label: 'الموضوع'
+					label: 'الموضوع',
+					pinned: true
 				}
 			},
 			{
