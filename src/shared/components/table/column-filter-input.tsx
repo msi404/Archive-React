@@ -39,7 +39,7 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 	const [inputValue, setInputValue] = useState(
 		(column.getFilterValue() as string) ?? ''
 	)
-	const [debounced] = useDebouncedValue(inputValue, 400)
+	const [debounced] = useDebouncedValue(inputValue, 1000)
 
 	useEffect(() => {
 		column.setFilterValue(debounced)

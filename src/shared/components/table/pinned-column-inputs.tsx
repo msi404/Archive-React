@@ -20,6 +20,7 @@ export const PinnedColumnsInputs: FC<{
 				>
 					{(col: Column<any, any>) => (
 						<Button
+							className='rounded-full'
 							key={col.id}
 							variant={pinned[col.id] ? 'default' : 'outline'}
 							onClick={() =>

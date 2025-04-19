@@ -171,7 +171,9 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.created ?? 'لا يوجد',
 				meta: {
-					label: 'تاريخ الانشاء'
+					label: 'تاريخ الانشاء',
+					filterable: false,
+					pinnable: false
 				}
 			},
 			{
