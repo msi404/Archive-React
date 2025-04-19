@@ -24,12 +24,10 @@ export const DynamicTable: FC<DynamicTableProps> = ( { table } ) =>
 	
 	const getCommonPinningStyles = (column: any): CSSProperties => {
 		const isPinned = column.getIsPinned()
-	
 		const isLastLeftPinnedColumn =
 			isPinned === 'left' && column.getIsLastColumn('left')
 		const isFirstRightPinnedColumn =
 			isPinned === 'right' && column.getIsFirstColumn('right')
-	
 		return {
 			boxShadow: isLastLeftPinnedColumn
 				? '4px 0 4px -4px gray inset'
@@ -47,7 +45,7 @@ export const DynamicTable: FC<DynamicTableProps> = ( { table } ) =>
 			position: isPinned ? 'sticky' : 'relative',
 			width: column.getSize(),
 			zIndex: isPinned ? 5 : 'auto',
-			background: 'white',
+			background: isPinned ? 'white' : 'none',
 			opacity: isPinned ? 0.98 : 1
 		}
 	}
