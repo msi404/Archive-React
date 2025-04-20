@@ -1,9 +1,10 @@
 import { useGetApiDocumentQuery } from '@/shared/api/archiveApiEnhance'
 import { useBooksTable, useBooksColumns } from '@/pages/(dashboard)/books/models'
+import type { ReturnDocument } from '@/shared/api/archiveApi';
 
-export const useBooks = () =>
-{
-	const { booksColumns } = useBooksColumns()
+export const useBooks = (setEditingRow: (row: ReturnDocument) => void) => {
+
+	const { booksColumns } = useBooksColumns(setEditingRow)
 	const {
 		table,
 		pagination: { pageIndex, pageSize },

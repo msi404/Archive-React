@@ -10,6 +10,7 @@ import
 	DialogFooter
 } from '@/shared/components/ui/dialog'
 import { Button } from '@/shared/components/ui/button'
+import { Separator } from '@/shared/components/ui/separator';
 
 export const DeleteDialog: FC<{action: () => void, isLoading: boolean}> = ({action, isLoading}) => {
 	return (
@@ -18,9 +19,10 @@ export const DeleteDialog: FC<{action: () => void, isLoading: boolean}> = ({acti
 				<Button variant='destructive'>حذف</Button>
 			</DialogTrigger>
 			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>هل اتريد فعلاً حذف العنصر؟</DialogTitle>
+				<DialogHeader className='flex justify-center mx-auto'>
+					<DialogTitle>هل تريد فعلاً حذف العنصر؟</DialogTitle>
 				</DialogHeader>
+				<Separator />
 				<DialogFooter className="flex justify-between">
 					<Button disabled={isLoading} variant="destructive" onClick={action}>حذف</Button>
 					<DialogClose>

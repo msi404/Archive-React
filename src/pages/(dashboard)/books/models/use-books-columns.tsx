@@ -1,15 +1,16 @@
 import { useMemo } from 'react'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
 import type { ColumnDef } from '@tanstack/react-table'
-import {useDelete} from '@/pages/(dashboard)/books/models/use-delete'
+import * as Yup from 'yup'
+import { useDelete } from '@/pages/(dashboard)/books/models/use-delete'
 import { TableColumnHeader } from '@/shared/components/table/column-header'
 import { Badge } from '@/shared/components/ui/badge'
 import { Show } from '@/shared/components/utils/show'
-import { Actions } from '@/shared/components/table/actions'
+import { DeleteDialog } from '@/shared/components/table/delete-dialog'
+import { Button } from '@/shared/components/ui/button';
 
-export const useBooksColumns = () =>
-{
-	const {onDelete, isLoading} = useDelete()
+export const useBooksColumns = (setEditingRow: (row: ReturnDocument) => void) => {
+	const { onDelete, isLoading } = useDelete()
 	const booksColumns: ColumnDef<ReturnDocument>[] = useMemo<
 		ColumnDef<ReturnDocument>[]
 	>(
@@ -22,7 +23,8 @@ export const useBooksColumns = () =>
 				accessorFn: (row) => row.titleName ?? 'لا يوجد',
 				meta: {
 					label: 'الموضوع',
-					pinned: true
+					pinned: true,
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -32,7 +34,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.bookKind ?? 'لا يوجد',
 				meta: {
-					label: 'تصنيف الكتاب'
+					label: 'تصنيف الكتاب',
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -44,7 +47,7 @@ export const useBooksColumns = () =>
 					<Show
 						when={cell.getValue() === 'وارد'}
 						fallback={
-							<Badge variant='destructive'>
+							<Badge variant="destructive">
 								{String(cell.getValue() ?? 'لا يوجد')}
 							</Badge>
 						}
@@ -58,7 +61,8 @@ export const useBooksColumns = () =>
 				meta: {
 					label: 'نوع الكتاب',
 					filterable: false,
-					pinnable: false
+					pinnable: false,
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -68,7 +72,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.destinationName ?? 'لا يوجد',
 				meta: {
-					label: 'من / الى'
+					label: 'من / الى',
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -76,14 +81,15 @@ export const useBooksColumns = () =>
 				header: ({ column }) => (
 					<TableColumnHeader column={column} title="الشخص المعني" />
 				),
-				accessorFn: ( row ) => row.concernedPerson ?? 'لا يوجد',
+				accessorFn: (row) => row.concernedPerson ?? 'لا يوجد',
 				cell: ({ cell }) => (
-					<Badge variant='outline'>
+					<Badge variant="outline">
 						{String(cell.getValue() ?? 'لا يوجد')}
 					</Badge>
-			),
+				),
 				meta: {
-					label: 'الشخص المعني'
+					label: 'الشخص المعني',
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -93,7 +99,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.referencePerson ?? 'لا يوجد',
 				meta: {
-					label: 'المعرف'
+					label: 'المعرف',
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -101,14 +108,15 @@ export const useBooksColumns = () =>
 				header: ({ column }) => (
 					<TableColumnHeader column={column} title="الجهة" />
 				),
-				accessorFn: ( row ) => row.point ?? 'لا يوجد',
+				accessorFn: (row) => row.point ?? 'لا يوجد',
 				cell: ({ cell }) => (
-						<Badge variant='outline'>
-							{String(cell.getValue() ?? 'لا يوجد')}
-						</Badge>
+					<Badge variant="outline">
+						{String(cell.getValue() ?? 'لا يوجد')}
+					</Badge>
 				),
 				meta: {
 					label: 'الجهة',
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -119,7 +127,8 @@ export const useBooksColumns = () =>
 				accessorFn: (row) => row.documentAttachmentsCount ?? 'لا يوجد',
 				meta: {
 					label: 'المرفقات',
-					filterType: 'number'
+					filterType: 'number',
+					editable: false
 				}
 			},
 			{
@@ -129,7 +138,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.internalIncoming ?? 'لا يوجد',
 				meta: {
-					label: 'رقم الوارد الداخلي'
+					label: 'رقم الوارد الداخلي',
+					validation: Yup.number().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -140,7 +150,8 @@ export const useBooksColumns = () =>
 				accessorFn: (row) => row.internalIncomingDate ?? 'لا يوجد',
 				meta: {
 					label: 'تاريخ الوارد الداخلي',
-					filterType: 'date'
+					filterType: 'date',
+					validation: Yup.date().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -150,7 +161,8 @@ export const useBooksColumns = () =>
 				),
 				accessorFn: (row) => row.number ?? 'لا يوجد',
 				meta: {
-					label: 'العدد'
+					label: 'العدد',
+					validation: Yup.number().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -161,7 +173,8 @@ export const useBooksColumns = () =>
 				accessorFn: (row) => row.date ?? 'لا يوجد',
 				meta: {
 					label: 'تاريخ الكتاب',
-					filterType: 'date'
+					filterType: 'date',
+					validation: Yup.date().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -173,7 +186,8 @@ export const useBooksColumns = () =>
 				meta: {
 					label: 'تاريخ الانشاء',
 					filterable: false,
-					pinnable: false
+					pinnable: false,
+					editable: false
 				}
 			},
 			{
@@ -181,14 +195,15 @@ export const useBooksColumns = () =>
 				header: ({ column }) => (
 					<TableColumnHeader column={column} title="اضيف بواسطة" />
 				),
-				accessorFn: ( row ) => row.point ?? 'لا يوجد',
+				accessorFn: (row) => row.point ?? 'لا يوجد',
 				cell: ({ cell }) => (
-					<Badge variant='outline'>
+					<Badge variant="outline">
 						{String(cell.getValue() ?? 'لا يوجد')}
 					</Badge>
-			),
+				),
 				meta: {
-					label: 'اضيف بواسطة'
+					label: 'اضيف بواسطة',
+					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
 			{
@@ -198,13 +213,25 @@ export const useBooksColumns = () =>
 					const doc = row.original
 
 					return (
-						<Actions action={() => onDelete(doc.id!)} doc={doc} isLoading={isLoading} />
+						<div className="flex justify-between gap-3">
+							<Button
+								variant='outline'
+								onClick={() => setEditingRow(doc)}
+							>
+								تعديل
+							</Button>
+							<DeleteDialog
+								isLoading={isLoading}
+								action={() => onDelete(doc.id!)}
+							/>
+						</div>
 					)
 				},
 				meta: {
 					label: 'الاجرائات',
 					filterable: false,
-					pinnable: false
+					pinnable: false,
+					editable: false
 				}
 			}
 		],

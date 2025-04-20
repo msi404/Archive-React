@@ -9,10 +9,14 @@ const extendedApi = generatedApi.enhanceEndpoints({
     deleteApiDocumentById: {
       invalidatesTags: ['Documents'],
     },
+    putApiDocumentById: {
+      invalidatesTags: ['Documents'],
+    }
   },
 })
 
 export const {
   useGetApiDocumentQuery,
   useDeleteApiDocumentByIdMutation,
+  usePutApiDocumentByIdMutation
 } = extendedApi
