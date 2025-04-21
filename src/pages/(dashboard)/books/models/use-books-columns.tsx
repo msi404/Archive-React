@@ -1,15 +1,19 @@
-import { useMemo } from 'react'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
 import type { ColumnDef } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import * as Yup from 'yup'
+import { useGetApiUserQuery } from '@/shared/api/archiveApi'
 import { useDelete } from '@/pages/(dashboard)/books/models/use-delete'
 import { TableColumnHeader } from '@/shared/components/table/column-header'
 import { Badge } from '@/shared/components/ui/badge'
 import { Show } from '@/shared/components/utils/show'
 import { DeleteDialog } from '@/shared/components/table/delete-dialog'
-import { Button } from '@/shared/components/ui/button';
+import { Button } from '@/shared/components/ui/button'
 
-export const useBooksColumns = (setEditingRow: (row: ReturnDocument) => void) => {
+export const useBooksColumns = (
+	setEditingRow: (row: ReturnDocument) => void
+) => {
+	const { data, isLoading: isLoadingUsers } = useGetApiUserQuery({})
 	const { onDelete, isLoading } = useDelete()
 	const booksColumns: ColumnDef<ReturnDocument>[] = useMemo<
 		ColumnDef<ReturnDocument>[]
@@ -62,7 +66,12 @@ export const useBooksColumns = (setEditingRow: (row: ReturnDocument) => void) =>
 					label: 'نوع الكتاب',
 					filterable: false,
 					pinnable: false,
-					validation: Yup.string().required('هذا الحقل مطلوب')
+					validation: Yup.string().required('هذا الحقل مطلوب'),
+					filterType: 'select',
+					options: [
+						{ label: 'وارد', value: '1' },
+						{ label: 'صادر', value: '2' }
+					]
 				}
 			},
 			{
@@ -73,6 +82,8 @@ export const useBooksColumns = (setEditingRow: (row: ReturnDocument) => void) =>
 				accessorFn: (row) => row.destinationName ?? 'لا يوجد',
 				meta: {
 					label: 'من / الى',
+					filterType: 'select',
+					options: data?.result?.map((user) => user.name) ?? [],
 					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
 			},
@@ -214,10 +225,7 @@ export const useBooksColumns = (setEditingRow: (row: ReturnDocument) => void) =>
 
 					return (
 						<div className="flex justify-between gap-3">
-							<Button
-								variant='outline'
-								onClick={() => setEditingRow(doc)}
-							>
+							<Button variant="outline" onClick={() => setEditingRow(doc)}>
 								تعديل
 							</Button>
 							<DeleteDialog
@@ -235,8 +243,7 @@ export const useBooksColumns = (setEditingRow: (row: ReturnDocument) => void) =>
 				}
 			}
 		],
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
+		[isLoadingUsers]
 	)
 
 	return {

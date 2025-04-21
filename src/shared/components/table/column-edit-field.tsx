@@ -1,4 +1,4 @@
-import { Input } from '@/shared/components/ui/input';
+import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import {
 	Select,
@@ -12,8 +12,10 @@ import {
 import { DatePicker } from '@/shared/components/date-picker'
 import { For } from '@/shared/components/utils/for'
 import { Switch, Match } from '@/shared/components/utils/switch'
-import {Show} from '@/shared/components/utils/show'
+import { Show } from '@/shared/components/utils/show'
 import { useField, useFormikContext } from 'formik'
+
+type Option = string | { label: string; value: string }
 
 type FilterType = 'text' | 'select' | 'date' | 'number'
 
@@ -22,7 +24,7 @@ interface ColumnMeta {
 	filterType?: FilterType
 	filterable?: boolean
 	editable?: boolean
-	options?: string[]
+	options?: Option[]
 }
 
 interface ColumnEditFieldProps {
@@ -44,9 +46,9 @@ export const ColumnEditField = ({ name, meta }: ColumnEditFieldProps) => {
 			<Label className="text-sm font-bold">{label}</Label>
 			<Switch>
 				<Match when={filterType === 'text'}>
-					<Input { ...field } placeholder={ label } className="mt-1 shadow" />
+					<Input {...field} placeholder={label} className="mt-1 shadow" />
 					<Show when={fieldMeta.touched && fieldMeta.error}>
-					<p className="text-destructive text-sm mt-1">{fieldMeta.error}</p>
+						<p className="text-destructive text-sm mt-1">{fieldMeta.error}</p>
 					</Show>
 				</Match>
 				<Match when={filterType === 'select'}>
@@ -61,11 +63,16 @@ export const ColumnEditField = ({ name, meta }: ColumnEditFieldProps) => {
 							<SelectGroup>
 								<SelectLabel>خيارات</SelectLabel>
 								<For each={options}>
-									{(item, index) => (
-										<SelectItem key={index} value={item}>
-											{item}
-										</SelectItem>
-									)}
+									{(item, index) => {
+										const value = typeof item === 'string' ? item : item.value
+										const label = typeof item === 'string' ? item : item.label
+
+										return (
+											<SelectItem key={index} value={value}>
+												{label}
+											</SelectItem>
+										)
+									}}
 								</For>
 							</SelectGroup>
 						</SelectContent>
@@ -93,5 +100,3 @@ export const ColumnEditField = ({ name, meta }: ColumnEditFieldProps) => {
 		</div>
 	)
 }
-
- 
