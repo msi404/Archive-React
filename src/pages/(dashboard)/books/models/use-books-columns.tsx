@@ -11,7 +11,8 @@ import { DeleteDialog } from '@/shared/components/table/delete-dialog'
 import { Button } from '@/shared/components/ui/button'
 
 export const useBooksColumns = (
-	setEditingRow: (row: ReturnDocument) => void
+	setEditingRow: ( row: ReturnDocument ) => void,
+	setShareRow: (row: ReturnDocument) => void
 ) => {
 	const { data, isLoading: isLoadingUsers } = useGetApiUserQuery({})
 	const { onDelete, isLoading } = useDelete()
@@ -225,8 +226,11 @@ export const useBooksColumns = (
 
 					return (
 						<div className="flex justify-between gap-3">
-							<Button variant="outline" onClick={() => setEditingRow(doc)}>
+							<Button variant='secondary' onClick={() => setEditingRow(doc)}>
 								تعديل
+							</Button>
+							<Button onClick={() => setShareRow(doc)}>
+								مشاركة
 							</Button>
 							<DeleteDialog
 								isLoading={isLoading}
@@ -243,6 +247,7 @@ export const useBooksColumns = (
 				}
 			}
 		],
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isLoadingUsers]
 	)
 

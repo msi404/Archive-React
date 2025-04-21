@@ -1,8 +1,4 @@
-import type { ReturnDocument } from '@/shared/api/archiveApi'
-import {usePutApiDocumentByIdMutation} from '@/shared/api/archiveApiEnhance'
-import { useState } from 'react'
 import { useBooks } from '@/pages/(dashboard)/books/models'
-import { usePinnedColumnsInputs } from '@/shared/models/use-pinned-columns-inputs'
 import {
 	Card,
 	CardHeader,
@@ -17,20 +13,33 @@ import { Retry } from '@/shared/components/table/retry'
 import { TableViewOptions } from '@/shared/components/table/table-view-options'
 import { PinnedColumnsInputs } from '@/shared/components/table/pinned-column-inputs'
 import { EditDialog } from '@/shared/components/table/edit-dialog'
+import { ShareDialog } from '@/pages/(dashboard)/books/components/share-dialog'
 import { ColumnFilterInput } from '@/shared/components/table/column-filter-input'
 import { For } from '@/shared/components/utils/for'
 import { Switch, Match } from '@/shared/components/utils/switch'
 import { Show } from '@/shared/components/utils/show'
 
 export default function BooksPage() {
-	const [ editingRow, setEditingRow ] = useState<ReturnDocument | null>( null )
-	const [updateDocuemnt, {isLoading: isLoadingUpdate}] = usePutApiDocumentByIdMutation({})
-	const { isError, isFetching, isLoading, isSuccess, refetch, table, total } =
-		useBooks(setEditingRow)
-	const { pinned, setPinned, savePinnedColumns } = usePinnedColumnsInputs(table)
-	const filteredColumns = table
-		.getAllColumns()
-		.filter((col) => col.getCanFilter())
+	const {
+		isError,
+		isFetching,
+		isLoading,
+		isSuccess,
+		refetch,
+		table,
+		total,
+		editingRow,
+		shareRow,
+		isLoadingUpdate,
+		setEditingRow,
+		updateDocuemnt,
+		setShareRow,
+		pinned,
+		setPinned,
+		savePinnedColumns,
+		filteredColumns
+	} = useBooks()
+	
 	return (
 		<Switch>
 			<Match when={isSuccess}>
@@ -42,17 +51,19 @@ export default function BooksPage() {
 							onClose={() => setEditingRow(null)}
 							initialData={editingRow!}
 							onSubmit={async (updated) => {
-								if (!editingRow?.id) return 
-							 
+								if (!editingRow?.id) return
+
 								await updateDocuemnt({
-								  id: editingRow.id,
-								  updateDocument: updated
+									id: editingRow.id,
+									updateDocument: updated
 								})
 								setEditingRow(null)
-							 }}
-							 
+							}}
 							columns={table.getAllColumns()}
 						/>
+					</Show>
+					<Show when={shareRow !== null}>
+						<ShareDialog open={!!shareRow} onClose={() => setShareRow(null)} />
 					</Show>
 					<CardHeader className="space-y-4">
 						<div className="flex gap-3">
