@@ -14,7 +14,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     title: 'السلة',
     url: '/cart',
-    icon: 'solar:cart-large-minimalistic-line-duotone'
+    icon: 'solar:folder-with-files-line-duotone'
   },
   {
     title: 'الكتب',
