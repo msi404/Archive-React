@@ -20,10 +20,6 @@
 + ✅ **Casl authorization**
 + ✅ **JWT authentication**
 
-![screenshot of the system](/public/screenshot-2.png)
----
-![screenshot of the system](/public/screenshot-1.png)
-
 ## Getting Started
 
 First, run the development server:

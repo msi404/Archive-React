@@ -12,7 +12,7 @@ import { IncomingBooksWidgets } from '@/pages/(dashboard)/books/widgets/incoming
 export default function BooksPage() {
 	return (
 		<Tabs dir='rtl' defaultValue="all">
-			<TabsList>
+			<TabsList className='flex justify-center w-full'>
 				<TabsTrigger value="all">الكل</TabsTrigger>
 				<TabsTrigger value="incoming">الوارد</TabsTrigger>
 				<TabsTrigger value="outgoing">الصادر</TabsTrigger>
