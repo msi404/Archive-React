@@ -18,7 +18,7 @@ export const DatePicker: FC<{
 	className?: string
 }> = ({ value, onChange, disabled, className }) => {
 	return (
-		<Popover >
+		<Popover>
 			<PopoverTrigger className={cn(className)} asChild>
 				<Button
 					variant="outline"

@@ -7,7 +7,6 @@ import type { ReturnDocument } from '@/shared/api/archiveApi';
 
 export const useBooks = () =>
 {
-
 	const [editingRow, setEditingRow] = useState<ReturnDocument | null>(null)
 	const [ shareRow, setShareRow ] = useState<ReturnDocument | null>( null )
 	const { booksColumns } = useBooksColumns(setEditingRow, setShareRow)

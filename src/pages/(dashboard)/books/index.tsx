@@ -1,4 +1,5 @@
-import { useBooks } from '@/pages/(dashboard)/books/models'
+import type { ReturnDocument } from '@/shared/api/archiveApi';
+import { useBooks } from '@/pages/(dashboard)/books/models';
 import {
 	Card,
 	CardHeader,
@@ -39,6 +40,17 @@ export default function BooksPage() {
 		savePinnedColumns,
 		filteredColumns
 	} = useBooks()
+
+	const onUpdateDocument = async (updated: ReturnDocument) =>
+	{
+			if (!editingRow?.id) return
+
+			await updateDocuemnt({
+				id: editingRow.id,
+				updateDocument: updated
+			})
+			setEditingRow(null)
+	}
 	
 	return (
 		<Switch>
@@ -50,20 +62,12 @@ export default function BooksPage() {
 							open={!!editingRow}
 							onClose={() => setEditingRow(null)}
 							initialData={editingRow!}
-							onSubmit={async (updated) => {
-								if (!editingRow?.id) return
-
-								await updateDocuemnt({
-									id: editingRow.id,
-									updateDocument: updated
-								})
-								setEditingRow(null)
-							}}
+							onSubmit={onUpdateDocument}
 							columns={table.getAllColumns()}
 						/>
 					</Show>
 					<Show when={shareRow !== null}>
-						<ShareDialog open={!!shareRow} onClose={() => setShareRow(null)} />
+						<ShareDialog doc={shareRow!} open={!!shareRow} onClose={() => setShareRow(null)} />
 					</Show>
 					<CardHeader className="space-y-4">
 						<div className="flex gap-3">
