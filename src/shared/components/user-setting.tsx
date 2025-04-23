@@ -41,7 +41,7 @@ export function UserSetting({
 				>
 					<Avatar className="h-14 w-14 rounded-full border border-blue-900">
 						<AvatarImage src={user.avatar} alt={user.name} />
-						<AvatarFallback className="rounded-lg">CN</AvatarFallback>
+						<AvatarFallback className="rounded-lg">user</AvatarFallback>
 					</Avatar>
 				</Button>
 			</SheetTrigger>
@@ -55,7 +55,7 @@ export function UserSetting({
 				<div className="flex flex-col gap-8 justify-center items-center">
 					<Avatar className="h-28 w-28 rounded-full border border-blue-900">
 						<AvatarImage src={user.avatar} alt={user.name} />
-						<AvatarFallback className="rounded-lg">CN</AvatarFallback>
+						<AvatarFallback className="rounded-lg">user</AvatarFallback>
 					</Avatar>
 					<div className="flex flex-col items-center justify-center gap-2">
 						<h1 className="font-bold text-xl">{user.name}</h1>

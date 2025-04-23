@@ -28,10 +28,10 @@ export const DatePicker: FC<{
 					)}
 				>
 					<Icon icon='solar:calendar-bold-duotone'/>
-					{value ? format(value, 'PPP') : <span>تاريخ الميلاد</span>}{' '}
+					{value ? format(value, 'PPP') : <span>تاريخ</span>}{' '}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent >
+			<PopoverContent className='w-auto'>
 			<Calendar
 					disabled={disabled}
 					mode="single"

@@ -1,22 +1,31 @@
 import { archiveApi as generatedApi } from '@/shared/api/archiveApi'
 
 const extendedApi = generatedApi.enhanceEndpoints({
-  addTagTypes: ['Documents'],
+  addTagTypes: ['Documents', 'CartImages'],
   endpoints: {
     getApiDocument: {
       providesTags: ['Documents'],
+    },
+    getApiDocumentImageCart: {
+      providesTags: ['CartImages']
     },
     deleteApiDocumentById: {
       invalidatesTags: ['Documents'],
     },
     putApiDocumentById: {
       invalidatesTags: ['Documents'],
-    }
+    },
+    deleteApiDocumentImageCartById: {
+      invalidatesTags: [{type: 'CartImages'}]
+    },
   },
 })
 
 export const {
   useGetApiDocumentQuery,
   useDeleteApiDocumentByIdMutation,
-  usePutApiDocumentByIdMutation
+  usePutApiDocumentByIdMutation,
+  useGetApiDocumentImageCartQuery,
+  useDeleteApiDocumentImageCartByIdMutation,
+  usePostApiUploadFileFlipMutation
 } = extendedApi
