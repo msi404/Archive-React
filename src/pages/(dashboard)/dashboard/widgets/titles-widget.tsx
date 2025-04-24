@@ -74,13 +74,13 @@ export const TitlesWidget: FC = () => {
 		async (name: string) => {
 			try {
 				await createTitle({ createTitle: { name } }).unwrap()
-				toast.success('Title added successfully')
+				toast.success('تم اضافة الموضوع بنجاح')
 
 				// Reset to first page and clear current titles
 				setPage(1)
 				setAllTitles([])
 			} catch (error) {
-				toast.error('Failed to add title')
+				toast.error('فشل في اضافة الموضوع')
 				console.error('Error adding title:', error)
 				throw error // Propagate error to the component
 			}
@@ -93,12 +93,12 @@ export const TitlesWidget: FC = () => {
 		async (id: string) => {
 			try {
 				await deleteTitle({ id }).unwrap()
-				toast.success('Title deleted successfully')
+				toast.success('تم حذف الموضوع بنجاح')
 
 				// Remove from local state immediately
 				setAllTitles((prev) => prev.filter((title) => title.id !== id))
 			} catch (error) {
-				toast.error('Failed to delete title')
+				toast.error('فشل في حذف الموضوع')
 				console.error('Error deleting title:', error)
 				throw error
 			}

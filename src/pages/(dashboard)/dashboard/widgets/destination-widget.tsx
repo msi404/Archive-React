@@ -75,13 +75,13 @@ export const DestinationWidget: FC = () => {
 		async (name: string) => {
 			try {
 				await createDestination({ createDestination: { name } }).unwrap()
-				toast.success('Destination added successfully')
+				toast.success('تم اضافة الوجهة بنجاح')
 
 				// Reset to first page and clear current destinations
 				setPage(1)
 				setAllDestinations([])
 			} catch (error) {
-				toast.error('Failed to add destination')
+				toast.error('فشل في اضافة الوجهة')
 				console.error('Error adding destination:', error)
 				throw error // Propagate error to the component
 			}
@@ -94,14 +94,14 @@ export const DestinationWidget: FC = () => {
 		async (id: string) => {
 			try {
 				await deleteDestination({ id }).unwrap()
-				toast.success('Destination deleted successfully')
+				toast.success('تم حذف الوجهة بنجاح')
 
 				// Remove from local state immediately
 				setAllDestinations((prev) =>
 					prev.filter((destination) => destination.id !== id)
 				)
 			} catch (error) {
-				toast.error('Failed to delete destination')
+				toast.error('فشل في حذف الوجهة')
 				console.error('Error deleting destination:', error)
 				throw error
 			}

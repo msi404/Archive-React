@@ -82,6 +82,7 @@ export function InfiniteList<T extends ListItem>({
 	const [newItemName, setNewItemName] = useState('')
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [openPopoverId, setOpenPopoverId] = useState<string | null>(null)
+	const [deletingItemId, setDeletingItemId] = useState<string | null>(null)
 
 	// Ref for the sentinel element (last item)
 	const observerTarget = useRef<HTMLDivElement>(null)
@@ -112,8 +113,15 @@ export function InfiniteList<T extends ListItem>({
 	// Handle delete with confirmation
 	const handleDelete = async (id: string) => {
 		if (onDeleteItem) {
-			await onDeleteItem(id)
-			setOpenPopoverId(null) // Close popover after deletion
+			setDeletingItemId(id)
+			try {
+				await onDeleteItem(id)
+			} catch (error) {
+				console.error('Failed to delete item:', error)
+			} finally {
+				setDeletingItemId(null)
+				setOpenPopoverId(null) // Close popover after deletion
+			}
 		}
 	}
 
@@ -147,10 +155,12 @@ export function InfiniteList<T extends ListItem>({
 	}, [hasMore, isLoading, onLoadMore])
 
 	// Default item renderer if not provided
-	const defaultRenderItem = (item: T) => (
+	const defaultRenderItem = (item: T, index: number) => (
 		<div
 			key={item.id}
-			className="flex items-center justify-between p-3 border-b last:border-b-0 hover:bg-muted/30 transition-colors"
+			className={`flex items-center justify-between p-3 border-b last:border-b-0 hover:bg-muted/50 transition-colors ${
+				index % 2 === 0 ? '' : 'bg-muted/10'
+			}`}
 		>
 			<span className="truncate">{item.name}</span>
 			<Show when={!!(deleteEnabled && onDeleteItem)}>
@@ -166,7 +176,9 @@ export function InfiniteList<T extends ListItem>({
 							size="icon"
 							className="text-muted-foreground hover:text-destructive"
 						>
-							<Icon icon="solar:trash-bin-trash-bold" className="h-4 w-4" />
+							<div className="bg-zinc-200 cursor-pointer rounded-full p-3 flex items-center justify-center">
+								<Icon icon="solar:trash-bin-2-bold-duotone" />
+							</div>
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent className="w-56" align="end">
@@ -177,13 +189,21 @@ export function InfiniteList<T extends ListItem>({
 									size="sm"
 									variant="destructive"
 									onClick={() => handleDelete(item.id)}
+									disabled={deletingItemId === item.id}
 								>
-									حذف
+									{deletingItemId === item.id ? (
+										<>
+											يتم الحذف...
+										</>
+									) : (
+										"حذف"
+									)}
 								</Button>
 								<Button
 									size="sm"
 									variant="outline"
 									onClick={() => setOpenPopoverId(null)}
+									disabled={deletingItemId === item.id}
 								>
 									الغاء
 								</Button>
@@ -268,9 +288,9 @@ export function InfiniteList<T extends ListItem>({
 						<Match when={items.length > 0}>
 							<div className="py-1">
 								<For each={items}>
-									{(item) => (
+									{(item, index) => (
 										<div key={item.id}>
-											{renderItem ? renderItem(item) : defaultRenderItem(item)}
+											{renderItem ? renderItem(item) : defaultRenderItem(item, index)}
 										</div>
 									)}
 								</For>
