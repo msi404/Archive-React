@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useState, useEffect } from 'react';
 import { Image } from '@unpic/react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetApiDocumentImageCartQuery, useGetApiUserQuery, useGetApiTitleQuery, useGetApiDestinationQuery,usePostApiDocumentMutation, usePostApiUploadFileMutation, type ReturnDocumentImageCartApiBody, PostApiDocumentApiArg } from '@/shared/api/archiveApi';
+import { useGetApiDocumentImageCartQuery, useGetApiUserQuery, useGetApiTitleQuery, useGetApiDestinationQuery, usePostApiDocumentMutation, usePostApiUploadFileMutation, type ReturnDocumentImageCartApiBody, PostApiDocumentApiArg } from '@/shared/api/archiveApi';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
@@ -118,10 +118,10 @@ const CartForm: FC = () =>
 			const documentData: PostApiDocumentApiArg = {
 				createDocument: {
 					number: values.number,
-					date: values.date?.toISOString().split('T')[0],
+					date: values.date?.toISOString().split( 'T' )[ 0 ],
 					nameDestination: values.nameDestination,
 					nameTitle: values.nameTitle,
-					type: values.type ? parseInt(values.type) : undefined,
+					type: values.type ? parseInt( values.type ) : undefined,
 					internalIncoming: values.internalIncoming,
 					comments: values.comments,
 					footNote: values.footNote,
@@ -131,7 +131,7 @@ const CartForm: FC = () =>
 					copyesTo: values.copyesTo,
 					referencePerson: values.referencePerson,
 					bookKind: values.bookKind,
-					internalIncomingDate: values.internalIncomingDate?.toISOString().split('T')[0]
+					internalIncomingDate: values.internalIncomingDate?.toISOString().split( 'T' )[ 0 ]
 				}
 			};
 
@@ -142,7 +142,7 @@ const CartForm: FC = () =>
 			{
 				toast.success( 'تم إنشاء الوثيقة بنجاح' );
 				// Navigate to cart page
-				navigate('/cart');
+				navigate( '/cart' );
 			}
 		} catch ( error )
 		{
@@ -292,9 +292,9 @@ const CartForm: FC = () =>
 								نسخ إلى
 							</label>
 							<MultiSelect
-								options={userOptions}
-								value={userOptions.filter(option => values.copyesTo.includes(option.value))}
-								onChange={(selected) => setFieldValue('copyesTo', selected.map(item => item.value))}
+								options={ userOptions }
+								value={ userOptions.filter( option => values.copyesTo.includes( option.value ) ) }
+								onChange={ ( selected ) => setFieldValue( 'copyesTo', selected.map( item => item.value ) ) }
 								placeholder="اختر الأشخاص"
 							/>
 						</div>

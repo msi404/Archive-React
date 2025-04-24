@@ -1,13 +1,25 @@
 import { archiveApi as generatedApi } from '@/shared/api/archiveApi'
 
 const extendedApi = generatedApi.enhanceEndpoints({
-  addTagTypes: ['Documents', 'CartImages'],
+  addTagTypes: ['Documents', 'CartImages', 'Dashboard', 'Destination'],
   endpoints: {
+    getApiDashboard: {
+      providesTags: ['Dashboard'],
+    },
     getApiDocument: {
       providesTags: ['Documents'],
     },
+    getApiDestination: {
+      providesTags: ['Destination'],
+    },
     getApiDocumentImageCart: {
       providesTags: ['CartImages']
+    },
+    deleteApiDestinationById: {
+      invalidatesTags: ['Destination'],
+    },
+    postApiDestination: {
+      invalidatesTags: ['Destination'],
     },
     deleteApiDocumentById: {
       invalidatesTags: ['Documents'],
@@ -18,9 +30,18 @@ const extendedApi = generatedApi.enhanceEndpoints({
     deleteApiDocumentImageCartById: {
       invalidatesTags: [{type: 'CartImages'}]
     },
+    getApiTitle: {
+      providesTags: ['Dashboard'],
+    },
     postApiUploadFile: {
       invalidatesTags: [{type: 'CartImages'}]
-    }
+    },
+    deleteApiTitleById: {
+      invalidatesTags: ['Dashboard'],
+    },
+    postApiTitle: {
+      invalidatesTags: ['Dashboard'],
+    },
   },
 })
 
@@ -31,5 +52,12 @@ export const {
   useGetApiDocumentImageCartQuery,
   useDeleteApiDocumentImageCartByIdMutation,
   usePostApiUploadFileFlipMutation,
-  usePostApiUploadFileMutation
+  usePostApiUploadFileMutation,
+  useGetApiDashboardQuery,
+  useDeleteApiTitleByIdMutation,
+  usePostApiTitleMutation,
+  useGetApiTitleQuery,
+  useGetApiDestinationQuery,
+  useDeleteApiDestinationByIdMutation,
+  usePostApiDestinationMutation,
 } = extendedApi

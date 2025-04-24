@@ -11,7 +11,7 @@ import {
   usePostApiDocumentImageCartMutation
 } from '@/shared/api/archiveApi'
 import { usePostApiUploadFileMutation } from '@/shared/api/archiveApiEnhance'
-import { Dropzone } from '@/shared/components/dropzone'
+import { SingleDropzone } from '@/shared/components/single-dropzone'
 import type { CreateDocumentImageCart } from '@/shared/api/archiveApi'
 
 export const AddedDialog: FC = () => {
@@ -56,7 +56,7 @@ export const AddedDialog: FC = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogTitle>رفع صورة</DialogTitle>
-          <Dropzone
+          <SingleDropzone
             label="ارفع الصورة هنا"
             setFile={(selectedFile) => setFile(selectedFile)}
           />
