@@ -18,6 +18,9 @@ const extendedApi = generatedApi.enhanceEndpoints({
     deleteApiDocumentImageCartById: {
       invalidatesTags: [{type: 'CartImages'}]
     },
+    postApiUploadFile: {
+      invalidatesTags: [{type: 'CartImages'}]
+    }
   },
 })
 
@@ -27,5 +30,6 @@ export const {
   usePutApiDocumentByIdMutation,
   useGetApiDocumentImageCartQuery,
   useDeleteApiDocumentImageCartByIdMutation,
-  usePostApiUploadFileFlipMutation
+  usePostApiUploadFileFlipMutation,
+  usePostApiUploadFileMutation
 } = extendedApi

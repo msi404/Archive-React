@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { Icon } from '@iconify/react'
 import { Image } from '@unpic/react'
 import { usePostApiUploadFileFlipMutation } from '@/shared/api/archiveApi'
@@ -87,18 +88,35 @@ export const BookItem: FC<{
 				</Switch>
 			</CardContent>
 			<CardFooter className="text-5xl md:text-3xl flex gap-5 justify-center">
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger>
-							<div className="md:hover:bg-secondary  bg-secondary md:bg-white p-4 md:p-3 rounded-full cursor-pointer transition-all">
-								<Icon icon="solar:archive-check-line-duotone" />
-							</div>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>ارشفة</p>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
+				<Popover>
+					<PopoverTrigger>
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger>
+									<div className="md:hover:bg-secondary  bg-secondary md:bg-white p-4 md:p-3 rounded-full cursor-pointer transition-all">
+										<Icon icon="solar:archive-check-line-duotone" />
+									</div>
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>ارشفة</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					</PopoverTrigger>
+					<PopoverContent align="center" sideOffset={8}>
+						<h1>هل انت متأكد من الارشفة؟</h1>
+						<Link to={`/cart/${id}`}>
+							<Button
+								variant="secondary"
+								disabled={isLoadingFlip}
+								type="button"
+								className="w-full"
+							>
+								ارشفة
+							</Button>
+						</Link>
+					</PopoverContent>
+				</Popover>
 
 				<Popover>
 					<PopoverTrigger>

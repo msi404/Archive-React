@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { useDebouncedValue } from '@mantine/hooks'
 import { useGetApiDocumentImageCartQuery } from '@/shared/api/archiveApiEnhance'
+import dayjs from 'dayjs'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { SkeletonTable } from '@/shared/components/table/skeleton-table'
 import { BookItem } from '@/pages/(dashboard)/cart/components/book-item'
 import { Switch, Match } from '@/shared/components/utils/switch'
 import { For } from '@/shared/components/utils/for'
 import { Input } from '@/shared/components/ui/input'
-import dayjs from 'dayjs'
-import { DatePicker } from '@/shared/components/date-picker';
+import {AddedDialog} from '@/pages/(dashboard)/cart/components/added-dialog'
+import { DatePicker } from '@/shared/components/date-picker'
 
 export default function CartPage() {
 	const [search, setSearch] = useState('')
@@ -33,16 +34,20 @@ export default function CartPage() {
 	})
 	return (
 		<Card className="p-4">
-			<div className='md:w-1/4 space-y-3'>
-			<Input
-				placeholder="اسم الملف"
-				value={search}
-				onChange={(e) => setSearch(e.currentTarget.value)}
-			/>
-			<DatePicker
-				value={selectedDate}
-					onChange={ ( date ) => setSelectedDate( date ?? null ) }
-			/>
+			<div className="flex flex-col md:flex-row gap-3 space-y-3">
+				<Input
+					className="w-full flex-1"
+					placeholder="اسم الملف"
+					value={search}
+					onChange={(e) => setSearch(e.currentTarget.value)}
+				/>
+				<div className="md:w-1/4">
+					<DatePicker
+						value={selectedDate}
+						onChange={(date) => setSelectedDate(date ?? null)}
+					/>
+				</div>
+				<AddedDialog />
 			</div>
 			<CardContent className="flex flex-wrap gap-4">
 				<Switch>
