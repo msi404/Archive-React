@@ -1,24 +1,30 @@
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import {selectUser} from '@/shared/lib/features/authSlice'
+import { useDeleteApiShareDocumentByIdMutation } from '@/shared/api/archiveApi'
 import { useGetApiDocumentQuery } from '@/shared/api/archiveApiEnhance';
 import { usePinnedColumnsInputs } from '@/shared/models/use-pinned-columns-inputs'
-import { useShareTable, useShareColumns } from '@/pages/(dashboard)/share/models'
+import { useSentTable, useSentColumns } from '@/pages/(dashboard)/sent/models'
+import type { ReturnDocument } from '@/shared/api/archiveApi';
 
-export const useShare = () =>
+export const useSent = () =>
 {
 	const { id } = useSelector(selectUser)
-	const { shareColumns } = useShareColumns()
+	const [editingRow, setEditingRow] = useState<ReturnDocument | null>(null)
+	const { sentColumns } = useSentColumns(setEditingRow)
 	const {
 		table,
 		pagination: { pageIndex, pageSize },
 		columnFilters
-	} = useShareTable([], 0, shareColumns)
+	} = useSentTable([], 0, sentColumns)
 
 		const { pinned, setPinned, savePinnedColumns } = usePinnedColumnsInputs(table)
 		const filteredColumns = table
 			.getAllColumns()
 			.filter( ( col ) => col.getCanFilter() )
 	
+	const [deleteDocuemnt, { isLoading: isLoadingUpdate }] =
+	useDeleteApiShareDocumentByIdMutation({})
 	const filters = columnFilters.reduce(
 		( acc, curr ) =>
 		{
@@ -33,7 +39,7 @@ export const useShare = () =>
 	const { data, isLoading, isError, isSuccess, isFetching,refetch } = useGetApiDocumentQuery({
 		pageIndex: pageIndex + 1,
 		pageSize,
-		shareToUserId: String(id),
+		shareFromUserId: String(id),
 		...filters
 	})
 
@@ -55,10 +61,13 @@ export const useShare = () =>
 		isFetching,
 		isSuccess,
 		refetch,
+		editingRow,
 		pinned,
 		setPinned,
 		savePinnedColumns,
 		filteredColumns,
-
+		deleteDocuemnt,
+		isLoadingUpdate,
+		setEditingRow,
 	}
 }

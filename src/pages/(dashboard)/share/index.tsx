@@ -1,5 +1,5 @@
-import { AllBooksWidgets } from '@/pages/(dashboard)/books/widgets/all-books'
+import { ShareWidget } from '@/pages/(dashboard)/share/widgets/share-widget'
 
 export default function SharePage() {
-	return <AllBooksWidgets />
+	return <ShareWidget />
 }
