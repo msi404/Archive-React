@@ -5,15 +5,23 @@ import {
 	getCoreRowModel,
 	getFilteredRowModel,
 	getSortedRowModel,
-	SortingState,
+	SortingState
 } from '@tanstack/react-table'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
-import { loadColumnVisibility, saveColumnVisibility } from '@/shared/lib/storage'
+import {
+	loadColumnVisibility,
+	saveColumnVisibility
+} from '@/shared/lib/storage'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const useShareTable = ( data: ReturnDocument[], pageCount: number, columns: any ) =>
-{
-	const [columnVisibility, setColumnVisibility] = useState(() => loadColumnVisibility())
+export const useShareTable = (
+	data: ReturnDocument[],
+	pageCount: number,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	columns: any
+) => {
+	const [columnVisibility, setColumnVisibility] = useState(() =>
+		loadColumnVisibility()
+	)
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [pagination, setPagination] = useState({
 		pageIndex: 0,
@@ -21,13 +29,13 @@ export const useShareTable = ( data: ReturnDocument[], pageCount: number, column
 	})
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
-	const table = useReactTable( {
+	const table = useReactTable({
 		initialState: {
 			columnPinning: {
-			  left: [],
-			  right: ['actions'],
-			},
-		 },
+				left: [],
+				right: ['actions']
+			}
+		},
 		data,
 		columns,
 		pageCount,
@@ -47,16 +55,15 @@ export const useShareTable = ( data: ReturnDocument[], pageCount: number, column
 		getFilteredRowModel: getFilteredRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		renderFallbackValue: <h1>لا يوجد</h1>
-	} )
+	})
 
 	useEffect(() => {
 		saveColumnVisibility(columnVisibility)
 	}, [columnVisibility])
-	
-	
+
 	useEffect(() => {
-		setPagination(prev => ({ ...prev, pageIndex: 0 }))
-	 }, [columnFilters])
+		setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+	}, [columnFilters])
 
 	return { table, pagination, columnFilters }
 }

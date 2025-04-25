@@ -1,4 +1,4 @@
-import { useShare } from '@/pages/(dashboard)/share/models';
+import { useShare } from '@/pages/(dashboard)/share/models'
 import {
 	Card,
 	CardHeader,
@@ -31,7 +31,7 @@ export const ShareWidget = () => {
 		savePinnedColumns,
 		filteredColumns
 	} = useShare()
-	
+
 	return (
 		<Switch>
 			<Match when={isSuccess}>

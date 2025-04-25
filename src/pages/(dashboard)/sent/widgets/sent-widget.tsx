@@ -1,5 +1,5 @@
-import type { ReturnDocument } from '@/shared/api/archiveApi';
-import { useSent } from '@/pages/(dashboard)/sent/models/use-sent';
+import type { ReturnDocument } from '@/shared/api/archiveApi'
+import { useSent } from '@/pages/(dashboard)/sent/models/use-sent'
 import {
 	Card,
 	CardHeader,
@@ -40,34 +40,36 @@ export const SentWidget = () => {
 
 	const onUpdateDocument = async (updated: ReturnDocument) => {
 		if (!editingRow?.id || !editingRow?.shareDocuments?.length) return
-		
+
 		// Get the documents that were removed (those in original but not in updated)
-		const originalDocIds = new Set(editingRow.shareDocuments?.map(doc => doc.id).filter(Boolean))
-		const updatedDocIds = new Set(updated.shareDocuments?.map(doc => doc.id).filter(Boolean))
-		
+		const originalDocIds = new Set(
+			editingRow.shareDocuments?.map((doc) => doc.id).filter(Boolean)
+		)
+		const updatedDocIds = new Set(
+			updated.shareDocuments?.map((doc) => doc.id).filter(Boolean)
+		)
+
 		// Get IDs to delete - in original but not in updated
 		const idsToDelete: string[] = []
-		originalDocIds.forEach(id => {
+		originalDocIds.forEach((id) => {
 			if (id && !updatedDocIds.has(id)) {
 				idsToDelete.push(id)
 			}
 		})
-		
+
 		// Only delete the selected documents
 		if (idsToDelete.length > 0) {
-			const deletePromises = idsToDelete.map(id => 
-				deleteDocuemnt({ id })
-			)
-			
+			const deletePromises = idsToDelete.map((id) => deleteDocuemnt({ id }))
+
 			await Promise.all(deletePromises)
-			
+
 			// Refetch to update the data
 			refetch()
 		}
-		
+
 		setEditingRow(null)
 	}
-	
+
 	return (
 		<Switch>
 			<Match when={isSuccess}>

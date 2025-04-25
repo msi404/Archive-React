@@ -191,13 +191,7 @@ export function InfiniteList<T extends ListItem>({
 									onClick={() => handleDelete(item.id)}
 									disabled={deletingItemId === item.id}
 								>
-									{deletingItemId === item.id ? (
-										<>
-											يتم الحذف...
-										</>
-									) : (
-										"حذف"
-									)}
+									{deletingItemId === item.id ? <>يتم الحذف...</> : 'حذف'}
 								</Button>
 								<Button
 									size="sm"
@@ -290,7 +284,9 @@ export function InfiniteList<T extends ListItem>({
 								<For each={items}>
 									{(item, index) => (
 										<div key={item.id}>
-											{renderItem ? renderItem(item) : defaultRenderItem(item, index)}
+											{renderItem
+												? renderItem(item)
+												: defaultRenderItem(item, index)}
 										</div>
 									)}
 								</For>

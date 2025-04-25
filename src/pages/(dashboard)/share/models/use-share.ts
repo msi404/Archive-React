@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux'
-import {selectUser} from '@/shared/lib/features/authSlice'
-import { useGetApiDocumentQuery } from '@/shared/api/archiveApiEnhance';
+import { selectUser } from '@/shared/lib/features/authSlice'
+import { useGetApiDocumentQuery } from '@/shared/api/archiveApiEnhance'
 import { usePinnedColumnsInputs } from '@/shared/models/use-pinned-columns-inputs'
-import { useShareTable, useShareColumns } from '@/pages/(dashboard)/share/models'
+import {
+	useShareTable,
+	useShareColumns
+} from '@/pages/(dashboard)/share/models'
 
-export const useShare = () =>
-{
+export const useShare = () => {
 	const { id } = useSelector(selectUser)
 	const { shareColumns } = useShareColumns()
 	const {
@@ -14,14 +16,13 @@ export const useShare = () =>
 		columnFilters
 	} = useShareTable([], 0, shareColumns)
 
-		const { pinned, setPinned, savePinnedColumns } = usePinnedColumnsInputs(table)
-		const filteredColumns = table
-			.getAllColumns()
-			.filter( ( col ) => col.getCanFilter() )
-	
+	const { pinned, setPinned, savePinnedColumns } = usePinnedColumnsInputs(table)
+	const filteredColumns = table
+		.getAllColumns()
+		.filter((col) => col.getCanFilter())
+
 	const filters = columnFilters.reduce(
-		( acc, curr ) =>
-		{
+		(acc, curr) => {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
 			acc[curr.id] = curr.value
@@ -30,12 +31,13 @@ export const useShare = () =>
 		{} as Record<string, string>
 	)
 
-	const { data, isLoading, isError, isSuccess, isFetching,refetch } = useGetApiDocumentQuery({
-		pageIndex: pageIndex + 1,
-		pageSize,
-		shareToUserId: String(id),
-		...filters
-	})
+	const { data, isLoading, isError, isSuccess, isFetching, refetch } =
+		useGetApiDocumentQuery({
+			pageIndex: pageIndex + 1,
+			pageSize,
+			shareToUserId: String(id),
+			...filters
+		})
 
 	const result = data?.result ?? []
 	const total = data?.count ?? 0
@@ -45,8 +47,8 @@ export const useShare = () =>
 		...prev,
 		data: result,
 		pageCount
-	} ) )
-	
+	}))
+
 	return {
 		table,
 		total,
@@ -58,7 +60,6 @@ export const useShare = () =>
 		pinned,
 		setPinned,
 		savePinnedColumns,
-		filteredColumns,
-
+		filteredColumns
 	}
 }

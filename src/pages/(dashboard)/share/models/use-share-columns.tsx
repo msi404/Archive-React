@@ -8,8 +8,7 @@ import { Badge } from '@/shared/components/ui/badge'
 import { Show } from '@/shared/components/utils/show'
 import { DeleteDialog } from '@/shared/components/table/delete-dialog'
 
-export const useShareColumns = (
-) => {
+export const useShareColumns = () => {
 	const { onDelete, isLoading } = useDelete()
 	const shareColumns: ColumnDef<ReturnDocument>[] = useMemo<
 		ColumnDef<ReturnDocument>[]
