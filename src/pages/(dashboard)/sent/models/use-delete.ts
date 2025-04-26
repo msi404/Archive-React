@@ -1,12 +1,12 @@
-import { useDeleteApiDocumentByIdMutation } from '@/shared/api/archiveApiEnhance'
+import { useDeleteApiDocumentByDocumentIdRemoveAllMutation } from '@/shared/api/archiveApiEnhance'
 
 export const useDelete = () =>
 {	
-	const [ deleteBook, { isLoading } ] = useDeleteApiDocumentByIdMutation()
+	const [ deleteBook, { isLoading } ] = useDeleteApiDocumentByDocumentIdRemoveAllMutation()
 
 	const onDelete = async (id: string) =>
 	{
-		await deleteBook( { id } )
+		await deleteBook({documentId: id}).unwrap()
 	}
 
 	return {

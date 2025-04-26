@@ -13,6 +13,8 @@
     "generate-api": "npx @rtk-query/codegen-openapi ./src/shared/config/openapi-config.cts"
   },
   "dependencies": {
+    "@casl/ability": "^6.7.3",
+    "@casl/react": "^5.0.0",
     "@generouted/react-router": "^1.20.0",
     "@mantine/core": "^7.17.4",
     "@mantine/dates": "^7.17.4",

@@ -42,7 +42,16 @@ const extendedApi = generatedApi.enhanceEndpoints({
     postApiTitle: {
       invalidatesTags: ['Dashboard'],
     },
-  },
+    postApiShareDocument: { 
+      invalidatesTags: ['Documents'],
+    },
+    deleteApiDocumentByDocumentIdRemoveAll: {
+      invalidatesTags: ['Documents'],
+    },
+    deleteApiDocumentByDocumentIdRemove: {
+      invalidatesTags: ['Documents'],
+    }
+},
 })
 
 export const {
@@ -60,4 +69,7 @@ export const {
   useGetApiDestinationQuery,
   useDeleteApiDestinationByIdMutation,
   usePostApiDestinationMutation,
+  usePostApiShareDocumentMutation,
+  useDeleteApiDocumentByDocumentIdRemoveAllMutation,
+  useDeleteApiDocumentByDocumentIdRemoveMutation
 } = extendedApi

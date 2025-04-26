@@ -7,7 +7,7 @@ import {
 import {
 	InfiniteList,
 	ListItem
-} from '@/pages/(dashboard)/dashboard/components/infinite-list'
+} from '@/pages/(dashboard)/dashboard/components'
 import { toast } from 'sonner'
 
 // Constants

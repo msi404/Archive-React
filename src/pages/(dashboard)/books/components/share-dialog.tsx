@@ -1,12 +1,10 @@
 import type { FC } from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import {selectUser} from '@/shared/lib/features/authSlice'
-import {
-	useGetApiUserQuery,
-	usePostApiShareDocumentMutation
-} from '@/shared/api/archiveApi'
+import { selectUser } from '@/shared/lib/features/authSlice'
+import { useGetApiUserQuery } from '@/shared/api/archiveApi'
 import type { ReturnDocument } from '@/shared/api/archiveApi'
+import { usePostApiShareDocumentMutation } from '@/shared/api/archiveApiEnhance'
 import {
 	Dialog,
 	DialogContent,
@@ -21,8 +19,7 @@ export const ShareDialog: FC<{
 	open: boolean
 	onClose: () => void
 	doc: ReturnDocument
-}> = ( { open, onClose, doc } ) =>
-{
+}> = ({ open, onClose, doc }) => {
 	const currentUser = useSelector(selectUser)
 	const [users, setUsers] = useState<{ label: string; value: string }[]>([])
 	const { data, isLoading: isLoadingUsers } = useGetApiUserQuery({})
@@ -53,17 +50,16 @@ export const ShareDialog: FC<{
 					onSubmit={async (values) => {
 						try {
 							await Promise.all(
-								values.user.map(
-									(userId: {label: string, value: string}) =>
-										shareDocument({
-											createShareDocument: {
-												documentId: doc.id,
-												toUserId: userId.value,
-												// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-												//@ts-expect-error
-												fromUserId: currentUser.id,
-											}
-										})
+								values.user.map((userId: { label: string; value: string }) =>
+									shareDocument({
+										createShareDocument: {
+											documentId: doc.id,
+											toUserId: userId.value,
+											// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+											//@ts-expect-error
+											fromUserId: currentUser.id
+										}
+									})
 								)
 							)
 							onClose()
@@ -75,7 +71,11 @@ export const ShareDialog: FC<{
 					{() => (
 						<Form>
 							<div className="space-y-4">
-								<Button disabled={isLoadingShareDocument} className="w-full" type="submit">
+								<Button
+									disabled={isLoadingShareDocument}
+									className="w-full"
+									type="submit"
+								>
 									مشاركة
 								</Button>
 								<UserMultiSelect options={users} />

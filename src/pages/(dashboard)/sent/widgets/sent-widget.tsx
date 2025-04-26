@@ -1,5 +1,5 @@
 import type { ReturnDocument } from '@/shared/api/archiveApi'
-import { useSent } from '@/pages/(dashboard)/sent/models/use-sent'
+import { useSent } from '@/pages/(dashboard)/sent/models'
 import {
 	Card,
 	CardHeader,
@@ -13,7 +13,7 @@ import { FilterDialog } from '@/shared/components/table/filter-dialog'
 import { Retry } from '@/shared/components/table/retry'
 import { TableViewOptions } from '@/shared/components/table/table-view-options'
 import { PinnedColumnsInputs } from '@/shared/components/table/pinned-column-inputs'
-import { EditShareDialog } from '@/pages/(dashboard)/sent/components/edit-share-dialog'
+import { EditShareDialog } from '@/pages/(dashboard)/sent/components'
 import { ColumnFilterInput } from '@/shared/components/table/column-filter-input'
 import { For } from '@/shared/components/utils/for'
 import { Switch, Match } from '@/shared/components/utils/switch'

@@ -1,0 +1,1 @@
+export {ShareDialog} from '@/pages/(dashboard)/books/components/share-dialog'

@@ -1,0 +1,1 @@
+export {EditShareDialog} from '@/pages/(dashboard)/sent/components/edit-share-dialog'

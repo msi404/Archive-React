@@ -1,5 +1,5 @@
-import { useGetApiDashboardQuery } from '@/shared/api/archiveApi'
 import { Icon } from '@iconify/react'
+import { useGetApiDashboardQuery } from '@/shared/api/archiveApi';
 import { KpiCard } from '@/pages/(dashboard)/dashboard/components'
 
 export const BooksStats = () => {

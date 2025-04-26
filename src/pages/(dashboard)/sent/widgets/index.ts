@@ -1,0 +1,1 @@
+export {SentWidget} from '@/pages/(dashboard)/sent/widgets/sent-widget'

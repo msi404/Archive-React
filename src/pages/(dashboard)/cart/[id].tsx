@@ -1,61 +1,73 @@
-import type { FC } from 'react';
-import { useState, useEffect } from 'react';
-import { Image } from '@unpic/react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useGetApiDocumentImageCartQuery, useGetApiUserQuery, useGetApiTitleQuery, useGetApiDestinationQuery, usePostApiDocumentMutation, usePostApiUploadFileMutation, type ReturnDocumentImageCartApiBody, PostApiDocumentApiArg } from '@/shared/api/archiveApi';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { Icon } from '@iconify/react';
-import { toast } from 'sonner';
+import type { FC } from 'react'
+import { useState, useEffect } from 'react'
+import { Image } from '@unpic/react'
+import { useParams, useNavigate } from 'react-router-dom'
+import {
+	useGetApiDocumentImageCartQuery,
+	useGetApiUserQuery,
+	useGetApiTitleQuery,
+	useGetApiDestinationQuery,
+	usePostApiDocumentMutation,
+	usePostApiUploadFileMutation,
+	type ReturnDocumentImageCartApiBody,
+	PostApiDocumentApiArg
+} from '@/shared/api/archiveApi'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import { Icon } from '@iconify/react'
+import { toast } from 'sonner'
 
-import { Dropzone } from '@/shared/components/dropzone';
-import { Button } from '@/shared/components/ui/button';
-import { DatePicker } from '@/shared/components/date-picker';
-import { TextField } from '@/shared/components/text-field';
-import { Combobox } from '@/shared/components/combobox';
-import { MultiSelect } from '@/shared/components/multi-select';
+import { Button } from '@/shared/components/ui/button'
+import { Dropzone } from '@/shared/components/dropzone'
+import { DatePicker } from '@/shared/components/date-picker'
+import { TextField } from '@/shared/components/text-field'
+import { Combobox } from '@/shared/components/combobox'
+import { MultiSelect } from '@/shared/components/multi-select'
 
-const CartForm: FC = () =>
-{
-	const navigate = useNavigate();
-	const [ file, setFile ] = useState<File | null>( null );
-	const { id } = useParams<{ id: string; }>();
-	const { data: documentImage, isLoading } = useGetApiDocumentImageCartQuery( { id } );
-	const { data: titlesData } = useGetApiTitleQuery( {} );
-	const { data: usersData } = useGetApiUserQuery( {} );
-	const { data: destinationsData } = useGetApiDestinationQuery( {} );
-	const [ documentImageData, setDocumentImageData ] = useState<ReturnDocumentImageCartApiBody>();
-	const [ uploadFile ] = usePostApiUploadFileMutation();
-	const [ createDocument ] = usePostApiDocumentMutation();
+const CartForm: FC = () => {
+	const navigate = useNavigate()
+	const [file, setFile] = useState<File | null>(null)
+	const { id } = useParams<{ id: string }>()
+	const { data: documentImage, isLoading } = useGetApiDocumentImageCartQuery({
+		id
+	})
+	const { data: titlesData } = useGetApiTitleQuery({})
+	const { data: usersData } = useGetApiUserQuery({})
+	const { data: destinationsData } = useGetApiDestinationQuery({})
+	const [documentImageData, setDocumentImageData] =
+		useState<ReturnDocumentImageCartApiBody>()
+	const [uploadFile] = usePostApiUploadFileMutation()
+	const [createDocument] = usePostApiDocumentMutation()
 
-	useEffect( () =>
-	{
-		if ( !isLoading )
-		{
-			setDocumentImageData( documentImage );
+	useEffect(() => {
+		if (!isLoading) {
+			setDocumentImageData(documentImage)
 		}
-	}, [ isLoading, documentImage ] );
+	}, [isLoading, documentImage])
 
-	if ( isLoading ) return <div>Loading...</div>;
-	if ( !documentImage ) return <div>Document not found</div>;
+	if (isLoading) return <div>Loading...</div>
+	if (!documentImage) return <div>Document not found</div>
 
 	// Transform titles data for combobox
-	const titleOptions = titlesData?.result?.map( title => ( {
-		value: title.id || '',
-		label: title.name || ''
-	} ) ) || [];
+	const titleOptions =
+		titlesData?.result?.map((title) => ({
+			value: title.id || '',
+			label: title.name || ''
+		})) || []
 
 	// Transform users data for combobox
-	const userOptions = usersData?.result?.map( user => ( {
-		value: user.id || '',
-		label: user.name || ''
-	} ) ) || [];
+	const userOptions =
+		usersData?.result?.map((user) => ({
+			value: user.id || '',
+			label: user.name || ''
+		})) || []
 
 	// Transform destinations data for combobox
-	const destinationOptions = destinationsData?.result?.map( destination => ( {
-		value: destination.id || '',
-		label: destination.name || ''
-	} ) ) || [];
+	const destinationOptions =
+		destinationsData?.result?.map((destination) => ({
+			value: destination.id || '',
+			label: destination.name || ''
+		})) || []
 
 	const initialValues = {
 		number: '',
@@ -72,45 +84,38 @@ const CartForm: FC = () =>
 		referencePerson: '',
 		bookKind: '',
 		internalIncomingDate: null as Date | null
-	};
+	}
 
-	const validationSchema = Yup.object( {
-		nameDestination: Yup.string().required( 'هذا الحقل مطلوب' ),
-		nameTitle: Yup.string().required( 'هذا الحقل مطلوب' )
-	} );
+	const validationSchema = Yup.object({
+		nameDestination: Yup.string().required('هذا الحقل مطلوب'),
+		nameTitle: Yup.string().required('هذا الحقل مطلوب')
+	})
 
-	const handleSubmit = async ( values: typeof initialValues ) =>
-	{
-		try
-		{
-			let fileId: string | undefined;
+	const handleSubmit = async (values: typeof initialValues) => {
+		try {
+			let fileId: string | undefined
 
 			// Upload file only if it exists
-			if ( file )
-			{
-				try
-				{
-					const uploadResponse = await uploadFile( {
+			if (file) {
+				try {
+					const uploadResponse = await uploadFile({
 						body: {
-							files: [ file ]
+							files: [file]
 						}
-					} ).unwrap();
+					}).unwrap()
 
 					// Type assertion since we know the response structure
-					const response = uploadResponse as { result?: Array<{ id: string; }>; };
-					if ( response?.result?.[ 0 ]?.id )
-					{
-						fileId = response.result[ 0 ].id;
-					} else
-					{
-						toast.error( 'فشل في رفع الملف' );
-						return;
+					const response = uploadResponse as { result?: Array<{ id: string }> }
+					if (response?.result?.[0]?.id) {
+						fileId = response.result[0].id
+					} else {
+						toast.error('فشل في رفع الملف')
+						return
 					}
-				} catch ( uploadError )
-				{
-					console.error( 'Error uploading file:', uploadError );
-					toast.error( 'حدث خطأ أثناء رفع الملف' );
-					return;
+				} catch (uploadError) {
+					console.error('Error uploading file:', uploadError)
+					toast.error('حدث خطأ أثناء رفع الملف')
+					return
 				}
 			}
 
@@ -118,10 +123,10 @@ const CartForm: FC = () =>
 			const documentData: PostApiDocumentApiArg = {
 				createDocument: {
 					number: values.number,
-					date: values.date?.toISOString().split( 'T' )[ 0 ],
+					date: values.date?.toISOString().split('T')[0],
 					nameDestination: values.nameDestination,
 					nameTitle: values.nameTitle,
-					type: values.type ? parseInt( values.type ) : undefined,
+					type: values.type ? parseInt(values.type) : undefined,
 					internalIncoming: values.internalIncoming,
 					comments: values.comments,
 					footNote: values.footNote,
@@ -131,47 +136,47 @@ const CartForm: FC = () =>
 					copyesTo: values.copyesTo,
 					referencePerson: values.referencePerson,
 					bookKind: values.bookKind,
-					internalIncomingDate: values.internalIncomingDate?.toISOString().split( 'T' )[ 0 ]
+					internalIncomingDate: values.internalIncomingDate
+						?.toISOString()
+						.split('T')[0]
 				}
-			};
+			}
 
 			// Create the document
-			const response = await createDocument( documentData ).unwrap();
+			const response = await createDocument(documentData).unwrap()
 
-			if ( response )
-			{
-				toast.success( 'تم إنشاء الوثيقة بنجاح' );
+			if (response) {
+				toast.success('تم إنشاء الوثيقة بنجاح')
 				// Navigate to cart page
-				navigate( '/cart' );
+				navigate('/cart')
 			}
-		} catch ( error )
-		{
-			console.error( 'Error submitting form:', error );
-			toast.error( 'حدث خطأ أثناء إنشاء الوثيقة' );
+		} catch (error) {
+			console.error('Error submitting form:', error)
+			toast.error('حدث خطأ أثناء إنشاء الوثيقة')
 		}
-	};
+	}
 
 	return (
 		<Formik
-			initialValues={ initialValues }
-			validationSchema={ validationSchema }
-			onSubmit={ handleSubmit }
+			initialValues={initialValues}
+			validationSchema={validationSchema}
+			onSubmit={handleSubmit}
 		>
-			{ ( { setFieldValue, values } ) => (
+			{({ setFieldValue, values }) => (
 				<Form className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-					{/* Left: Dropzone and Preview */ }
+					{/* Left: Dropzone and Preview */}
 					<div className="flex flex-col gap-4 mx-auto">
 						<Image
-							src={ documentImageData?.result?.[ 0 ]?.path || '' }
-							layout='fixed'
-							width={ 400 }
-							height={ 200 }
+							src={documentImageData?.result?.[0]?.path || ''}
+							layout="fixed"
+							width={400}
+							height={200}
 							alt="Document Preview"
 							className="rounded-lg shadow-md"
 						/>
 					</div>
 
-					{/* Right: Form Fields */ }
+					{/* Right: Form Fields */}
 					<div className="grid grid-cols-1 md:grid-cols-2 col-span-2 gap-4">
 						<TextField
 							className="col-span-2 md:col-span-1"
@@ -184,19 +189,17 @@ const CartForm: FC = () =>
 								التاريخ
 							</label>
 							<DatePicker
-								value={ values.date }
-								onChange={ ( date ) => setFieldValue( 'date', date ) }
+								value={values.date}
+								onChange={(date) => setFieldValue('date', date)}
 							/>
 						</div>
 						<div className="flex flex-col gap-1 col-span-2 md:col-span-1">
-							<label className="text-sm font-medium text-gray-700">
-								الجهة
-							</label>
+							<label className="text-sm font-medium text-gray-700">الجهة</label>
 							<Combobox
 								label="اختر الجهة"
-								value={ values.nameDestination }
-								onChange={ ( value ) => setFieldValue( 'nameDestination', value ) }
-								options={ destinationOptions }
+								value={values.nameDestination}
+								onChange={(value) => setFieldValue('nameDestination', value)}
+								options={destinationOptions}
 							/>
 						</div>
 						<div className="flex flex-col gap-1 col-span-2 md:col-span-1">
@@ -205,9 +208,9 @@ const CartForm: FC = () =>
 							</label>
 							<Combobox
 								label="اختر العنوان"
-								value={ values.nameTitle }
-								onChange={ ( value ) => setFieldValue( 'nameTitle', value ) }
-								options={ titleOptions }
+								value={values.nameTitle}
+								onChange={(value) => setFieldValue('nameTitle', value)}
+								options={titleOptions}
 							/>
 						</div>
 						<div className="flex flex-col gap-1 col-span-2 md:col-span-1">
@@ -216,12 +219,12 @@ const CartForm: FC = () =>
 							</label>
 							<Combobox
 								label="اختر نوع الكتاب"
-								value={ values.type }
-								onChange={ ( value ) => setFieldValue( 'type', value ) }
-								options={ [
+								value={values.type}
+								onChange={(value) => setFieldValue('type', value)}
+								options={[
 									{ value: '0', label: 'صادر' },
-									{ value: '1', label: 'وارد' },
-								] }
+									{ value: '1', label: 'وارد' }
+								]}
 							/>
 						</div>
 						<TextField
@@ -266,16 +269,16 @@ const CartForm: FC = () =>
 							</label>
 							<Combobox
 								label="اختر تصنيف الكتاب"
-								value={ values.bookKind }
-								onChange={ ( value ) => setFieldValue( 'bookKind', value ) }
-								options={ [
+								value={values.bookKind}
+								onChange={(value) => setFieldValue('bookKind', value)}
+								options={[
 									{ value: 'طلب شخصي', label: 'طلب شخصي' },
 									{ value: 'كتاب رسمي', label: 'كتاب رسمي' },
 									{ value: 'قصاصة', label: 'قصاصة' },
 									{ value: 'هامش', label: 'هامش' },
 									{ value: 'معلومات او بيانات', label: 'معلومات او بيانات' },
-									{ value: 'اخرى', label: 'اخرى' },
-								] }
+									{ value: 'اخرى', label: 'اخرى' }
+								]}
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
@@ -283,8 +286,8 @@ const CartForm: FC = () =>
 								تاريخ الوارد الداخلي
 							</label>
 							<DatePicker
-								value={ values.internalIncomingDate }
-								onChange={ ( date ) => setFieldValue( 'internalIncomingDate', date ) }
+								value={values.internalIncomingDate}
+								onChange={(date) => setFieldValue('internalIncomingDate', date)}
 							/>
 						</div>
 						<div className="flex flex-col gap-1 col-span-2 md:col-span-1">
@@ -292,16 +295,23 @@ const CartForm: FC = () =>
 								نسخ إلى
 							</label>
 							<MultiSelect
-								options={ userOptions }
-								value={ userOptions.filter( option => values.copyesTo.includes( option.value ) ) }
-								onChange={ ( selected ) => setFieldValue( 'copyesTo', selected.map( item => item.value ) ) }
+								options={userOptions}
+								value={userOptions.filter((option) =>
+									values.copyesTo.includes(option.value)
+								)}
+								onChange={(selected) =>
+									setFieldValue(
+										'copyesTo',
+										selected.map((item) => item.value)
+									)
+								}
 								placeholder="اختر الأشخاص"
 							/>
 						</div>
-						<div className='w-full col-span-2'>
+						<div className="w-full col-span-2">
 							<Dropzone
 								label="اضغط لرفع المرفقات"
-								setFile={ ( files ) => setFile( files ? files[ 0 ] : null ) }
+								setFile={(files) => setFile(files ? files[0] : null)}
 								multiple
 							/>
 						</div>
@@ -311,9 +321,9 @@ const CartForm: FC = () =>
 						</Button>
 					</div>
 				</Form>
-			) }
+			)}
 		</Formik>
-	);
-};
+	)
+}
 
-export default CartForm;
+export default CartForm

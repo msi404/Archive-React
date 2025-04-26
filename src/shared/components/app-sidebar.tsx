@@ -1,6 +1,9 @@
 import { useLocation } from 'react-router-dom'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react'
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/shared/lib/features/authSlice'
+import { defineAbilitiesFor } from '@/shared/config/ability'
 import {
 	Sidebar,
 	SidebarContent,
@@ -20,6 +23,13 @@ import { TatweerLogo } from '@/shared/components'
 export function AppSidebar() {
 	const location = useLocation()
 	const pathname = location.pathname
+	const user = useSelector(selectUser)
+	const ability = defineAbilitiesFor(user)
+
+	const visibleItems = SIDEBAR_ITEMS.filter(item =>
+		ability.can('read', item.subject)
+	)
+
 	return (
 		<Sidebar collapsible="icon" side="right">
 			<SidebarHeader />
@@ -29,7 +39,7 @@ export function AppSidebar() {
 					<SidebarGroupLabel>العناصر</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
-							<For each={SIDEBAR_ITEMS}>
+							<For each={visibleItems}>
 								{(item) => (
 									<SidebarMenuItem key={item.url}>
 										<SidebarMenuButton size="lg" asChild>
