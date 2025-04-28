@@ -38,7 +38,7 @@ export const DatePicker: FC<{
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					//@ts-expect-error
 					selected={value}
-					captionLayout="dropdown-buttons"
+					captionLayout="dropdown"
 					onSelect={onChange}
 					initialFocus
 					fromYear={1960}

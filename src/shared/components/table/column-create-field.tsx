@@ -17,52 +17,57 @@ import { useField, useFormikContext } from 'formik'
 
 type Option = string | { label: string; value: string }
 
-type FilterType = 'text' | 'select' | 'date' | 'number'
+type FieldType = 'text' | 'select' | 'date' | 'number' | 'password' // Added password type
 
-interface ColumnMeta {
+// Define meta specifically for creation fields
+interface ColumnCreateMeta {
 	label?: string
-	filterType?: FilterType
-	filterable?: boolean
-	editable?: boolean
+	type?: FieldType // Use FieldType
+	filterable?: boolean // Keep filterable/pinnable if needed for other logic
+	pinnable?: boolean
+	creatable?: boolean // Use creatable instead of editable
 	options?: Option[]
+	defaultValue?: unknown // Add defaultValue for creation forms
+  validation?: unknown // Keep validation
 }
 
-interface ColumnEditFieldProps {
+interface ColumnCreateFieldProps {
 	name: string
-	meta?: ColumnMeta
+	meta?: ColumnCreateMeta
 }
 
-export const ColumnEditField = ({ name, meta }: ColumnEditFieldProps) => {
+export const ColumnCreateField = ({ name, meta }: ColumnCreateFieldProps) => {
 	const [field, fieldMeta] = useField(name)
 	const { setFieldValue } = useFormikContext()
 	const label = meta?.label ?? name
-	const filterType = meta?.filterType ?? 'text'
+	const fieldType = meta?.type ?? 'text' // Renamed for clarity
 	const options = meta?.options ?? []
 
-	if (meta?.editable === false) return null
+  // Check for the creatable prop
+	if (meta?.creatable === false) return null
 
 	return (
 		<div>
 			<Label className="text-sm font-bold">{label}</Label>
 			<Switch>
-				<Match when={filterType === 'text'}>
+				<Match when={fieldType === 'text'}>
 					<Input {...field} placeholder={label} className="mt-1 shadow" />
-					<Show when={fieldMeta.touched && fieldMeta.error}>
-						<p className="text-destructive text-sm mt-1">{fieldMeta.error}</p>
-					</Show>
 				</Match>
-				<Match when={filterType === 'select'}>
+        <Match when={fieldType === 'password'}>
+					<Input {...field} type="password" placeholder={label} className="mt-1 shadow" />
+				</Match>
+				<Match when={fieldType === 'select'}>
 					<Select
 						value={field.value}
 						onValueChange={(value) => setFieldValue(name, value)}
 					>
-						<SelectTrigger className="w-full">
-							<SelectValue placeholder="اختر">
+						<SelectTrigger className="w-full mt-1 shadow">
+							<SelectValue placeholder={`اختر ${label}`}>
 								{options.find(opt => (typeof opt === 'string' ? opt : opt.value) === field.value)
 									? (typeof options.find(opt => (typeof opt === 'string' ? opt : opt.value) === field.value) === 'string'
 										? field.value
 										: (options.find(opt => (typeof opt === 'string' ? opt : opt.value) === field.value) as { label: string }).label)
-									: 'اختر'}
+									: `اختر ${label}`}
 							</SelectValue>
 						</SelectTrigger>
 						<SelectContent>
@@ -84,32 +89,30 @@ export const ColumnEditField = ({ name, meta }: ColumnEditFieldProps) => {
 						</SelectContent>
 					</Select>
 				</Match>
-				<Match when={filterType === 'date'}>
+				<Match when={fieldType === 'date'}>
 					<DatePicker
+            className='mt-1 shadow'
 						value={field.value ? new Date(field.value) : null}
 						onChange={(date) => {
-							if (date) {
-								const year = date.getFullYear();
-								const month = (date.getMonth() + 1).toString().padStart(2, '0');
-								const day = date.getDate().toString().padStart(2, '0');
-								const formattedDate = `${year}-${month}-${day}`;
-								setFieldValue(name, formattedDate);
-							} else {
-								setFieldValue(name, null);
-							}
+							const iso = date?.toISOString().split('T')[0]
+							setFieldValue(name, iso)
 						}}
 					/>
 				</Match>
-				<Match when={filterType === 'number'}>
+				<Match when={fieldType === 'number'}>
 					<Input
 						type="number"
 						value={field.value}
-						onChange={(e) => setFieldValue(name, e.target.value)}
+						onChange={(e) => setFieldValue(name, e.target.value)} // Directly set value, consider parsing if needed
 						placeholder={label}
 						className="mt-1 shadow"
 					/>
 				</Match>
 			</Switch>
+      {/* Common error display */}
+      <Show when={fieldMeta.touched && fieldMeta.error}>
+				<p className="text-destructive text-sm mt-1">{fieldMeta.error}</p>
+			</Show>
 		</div>
 	)
 }

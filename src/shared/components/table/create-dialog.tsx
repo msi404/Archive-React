@@ -10,14 +10,14 @@ import {
 } from '@/shared/components/ui/dialog'
 import { Button } from '@/shared/components/ui/button'
 import { Formik, Form } from 'formik'
-import { ColumnEditField } from '@/shared/components/table/column-edit-field'
+import { ColumnCreateField } from '@/shared/components/table/column-create-field'
 import { For } from '@/shared/components/utils/for'
 import { Separator } from '@/shared/components/ui/separator'
 
 interface CreateDialogProps<T> {
 	open: boolean
 	onClose: () => void
-	onSubmit: (newData: Partial<T>) => Promise<void> // Use Partial<T> as not all fields might be present
+	onSubmit: (newData: Partial<T>) => Promise<void> 
 	columns: Column<T, unknown>[]
 	isLoading?: boolean
 }
@@ -31,9 +31,13 @@ export function CreateDialog<T extends Record<string, any>>({
 	isLoading = false
 }: CreateDialogProps<T>) {
 	const creatableColumns = columns.filter(
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		//@ts-expect-error
-		(col) => col.columnDef.meta?.editable !== false // Reuse editable flag for creatable fields
+		(col) => {
+			// Explicitly check for the 'creatable' meta property.
+			// Default to true if 'creatable' is not defined, exclude if explicitly false.
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-expect-error - Accessing meta potentially not defined
+			return col.columnDef.meta?.creatable !== false;
+		}
 	)
 
 	const validationSchema = Yup.object(
@@ -80,7 +84,7 @@ export function CreateDialog<T extends Record<string, any>>({
 							<div className="grid md:grid-cols-2 gap-4">
 								<For each={creatableColumns}>
 									{(col) => (
-										<ColumnEditField
+										<ColumnCreateField
 											key={col.id}
 											name={col.id}
 											meta={col.columnDef.meta}

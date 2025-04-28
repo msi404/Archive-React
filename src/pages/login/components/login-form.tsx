@@ -18,10 +18,6 @@ export function LoginForm({
 		>
 			<Form className={cn('flex flex-col gap-6', className)} {...props}>
 				<div className="flex flex-col items-center gap-2 text-center">
-					<h1 className="text-2xl font-bold">تسجيل الدخول الى الحساب</h1>
-					<p className="text-balance text-sm text-muted-foreground">
-						ادخل اسم المستخدم وكلمة المرور لتسجيل الدخول
-					</p>
 				</div>
 				<div className="grid gap-6">
 					<div className="grid gap-2">

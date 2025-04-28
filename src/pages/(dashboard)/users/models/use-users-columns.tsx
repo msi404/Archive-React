@@ -94,10 +94,11 @@ export const useUsersColumns = (setEditingRow: (row: ReturnUser) => void) => {
 					validation: Yup.string()
 						.min(6, 'يجب أن تكون كلمة المرور 6 أحرف على الأقل')
 						.required('كلمة المرور مطلوبة'),
-					editable: true,
+					editable: false,
 					filterable: false,
 					pinnable: false,
-					type: 'password'
+					type: 'password',
+					creatable: true
 				}
 			},
 			{
@@ -113,6 +114,7 @@ export const useUsersColumns = (setEditingRow: (row: ReturnUser) => void) => {
 				meta: {
 					label: 'الصلاحيات',
 					filterType: 'select',
+					type: 'select',
 					options: roleOptions,
 					validation: Yup.string().required('هذا الحقل مطلوب')
 				}
@@ -161,7 +163,8 @@ export const useUsersColumns = (setEditingRow: (row: ReturnUser) => void) => {
 				label: 'الاجرائات',
 				filterable: false,
 				pinnable: false,
-				editable: false
+				editable: false,
+				creatable: false
 			}
 		}
 

@@ -45,7 +45,7 @@ export function AppSidebar() {
 										<SidebarMenuButton size="lg" asChild>
 											<Link
 												className={`${
-													pathname === item.url ? 'bg-blue-400/20' : ''
+													pathname === item.url ? 'bg-primary/20' : ''
 												} hover:bg-blue-200/20`}
 												to={item.url}
 											>

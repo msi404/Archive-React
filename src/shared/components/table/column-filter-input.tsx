@@ -82,8 +82,8 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 						onValueChange={(value) => setInputValue(value)}
 					>
 						<SelectTrigger className="w-full">
-							<SelectValue placeholder="Select an item">
-								{options.find(opt => (typeof opt === 'string' ? opt : opt.value) === inputValue)
+						<SelectValue placeholder={`اختر ${label}`}>
+						{options.find(opt => (typeof opt === 'string' ? opt : opt.value) === inputValue)
 									? (typeof options.find(opt => (typeof opt === 'string' ? opt : opt.value) === inputValue) === 'string'
 										? inputValue
 										: (options.find(opt => (typeof opt === 'string' ? opt : opt.value) === inputValue) as { label: string }).label)
@@ -92,7 +92,7 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
-								<SelectLabel>Items</SelectLabel>
+								<SelectLabel>خيارات</SelectLabel>
 								<For each={options}>
 									{(item, index) => {
 										const value = typeof item === 'string' ? item : item.value
@@ -113,9 +113,15 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 					<DatePicker
 						value={inputValue ? new Date(inputValue) : null}
 						onChange={(date) => {
-							const iso = date?.toISOString().split('T')[0]
-							if (iso) setInputValue(iso)
-							else setInputValue('')
+							if (date) {
+								const year = date.getFullYear();
+								const month = (date.getMonth() + 1).toString().padStart(2, '0');
+								const day = date.getDate().toString().padStart(2, '0');
+								const formattedDate = `${year}-${month}-${day}`;
+								setInputValue(formattedDate);
+							} else {
+								setInputValue('');
+							}
 						}}
 					/>
 				</Match>
