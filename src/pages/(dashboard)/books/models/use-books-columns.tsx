@@ -278,10 +278,8 @@ export const useBooksColumns = (
 	}, [
 		isLoadingUsers,
 		user,
-		ability,
 		setEditingRow,
 		setShareRow,
-		onDelete,
 		isLoading,
 		data
 	])

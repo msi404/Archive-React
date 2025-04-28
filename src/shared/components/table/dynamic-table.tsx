@@ -52,8 +52,8 @@ export const DynamicTable: FC<DynamicTableProps> = ( { table } ) =>
 	
 	return (
 		<Fragment>
-			<div className='border shadow relative overflow-x-scroll'>
-				<Table style={{width: table.getTotalSize()}}>
+			<div className='border shadow relative overflow-x-auto'>
+				<Table style={{width: '100%'}}>
 					<TableHeader className="bg-secondary">
 						<For each={table.getHeaderGroups()}>
 							{(headerGroup: any) => (
@@ -88,7 +88,7 @@ export const DynamicTable: FC<DynamicTableProps> = ( { table } ) =>
 							<For each={table.getRowModel().rows}>
 								{(row: any) => (
 									<TableRow
-										className="border-b even:bg-slate-50 dark:even:bg-slate-900 h-16 rounded-lg"
+										className="even:bg-slate-50 dark:even:bg-slate-900 h-16"
 										key={row.id}
 										data-state={row.getIsSelected() && 'selected'}
 									>

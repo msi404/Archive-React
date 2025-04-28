@@ -21,7 +21,7 @@ export const defineAbilitiesFor = (user: any) => {
   const { can, cannot, build } = new AbilityBuilder<AppAbility>(createMongoAbility);
 
   if (user.role === 'Admin') {
-    can('manage', 'all');
+    can( 'manage', 'all' );
 
   } else if (user.role === 'User') {
 		can('read', 'HomePage')

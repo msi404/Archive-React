@@ -1,57 +1,75 @@
 import { archiveApi as generatedApi } from '@/shared/api/archiveApi'
 
 const extendedApi = generatedApi.enhanceEndpoints({
-  addTagTypes: ['Documents', 'CartImages', 'Dashboard', 'Destination'],
+  addTagTypes: ['Documents', 'CartImages', 'Dashboard', 'Destination', 'Users'],
   endpoints: {
+    getApiUser: {
+      providesTags: [ 'Users' ],
+    },
     getApiDashboard: {
-      providesTags: ['Dashboard'],
+      providesTags: [ 'Dashboard' ],
     },
     getApiDocument: {
-      providesTags: ['Documents'],
+      providesTags: [ 'Documents' ],
     },
     getApiDestination: {
-      providesTags: ['Destination'],
+      providesTags: [ 'Destination' ],
     },
     getApiDocumentImageCart: {
-      providesTags: ['CartImages']
+      providesTags: [ 'CartImages' ]
     },
     deleteApiDestinationById: {
-      invalidatesTags: ['Destination'],
+      invalidatesTags: [ 'Destination' ],
     },
     postApiDestination: {
-      invalidatesTags: ['Destination'],
+      invalidatesTags: [ 'Destination' ],
     },
     deleteApiDocumentById: {
-      invalidatesTags: ['Documents'],
+      invalidatesTags: [ 'Documents' ],
     },
     putApiDocumentById: {
-      invalidatesTags: ['Documents'],
+      invalidatesTags: [ 'Documents' ],
     },
     deleteApiDocumentImageCartById: {
-      invalidatesTags: [{type: 'CartImages'}]
+      invalidatesTags: [ { type: 'CartImages' } ]
     },
     getApiTitle: {
-      providesTags: ['Dashboard'],
+      providesTags: [ 'Dashboard' ],
     },
     postApiUploadFile: {
-      invalidatesTags: [{type: 'CartImages'}]
+      invalidatesTags: [ { type: 'CartImages' } ]
     },
     deleteApiTitleById: {
-      invalidatesTags: ['Dashboard'],
+      invalidatesTags: [ 'Dashboard' ],
     },
     postApiTitle: {
-      invalidatesTags: ['Dashboard'],
+      invalidatesTags: [ 'Dashboard' ],
     },
-    postApiShareDocument: { 
-      invalidatesTags: ['Documents'],
+    postApiShareDocument: {
+      invalidatesTags: [ 'Documents' ],
     },
     deleteApiDocumentByDocumentIdRemoveAll: {
-      invalidatesTags: ['Documents'],
+      invalidatesTags: [ 'Documents' ],
     },
     deleteApiDocumentByDocumentIdRemove: {
-      invalidatesTags: ['Documents'],
-    }
-},
+      invalidatesTags: [ 'Documents' ],
+    },
+    deleteApiUserById: {
+      invalidatesTags: [ 'Users' ],
+    },
+    putApiUserById: {
+      invalidatesTags: [ 'Users' ],
+    },
+    putApiUserPasswordById: {
+      invalidatesTags: [ 'Users' ],
+    },
+    postApiUser: {
+      invalidatesTags: [ 'Users' ],
+    },
+    putApiUserActiveById: {
+      invalidatesTags: [ 'Users' ],
+    },
+  }
 })
 
 export const {
@@ -71,5 +89,11 @@ export const {
   usePostApiDestinationMutation,
   usePostApiShareDocumentMutation,
   useDeleteApiDocumentByDocumentIdRemoveAllMutation,
-  useDeleteApiDocumentByDocumentIdRemoveMutation
+  useDeleteApiDocumentByDocumentIdRemoveMutation,
+  useGetApiUserQuery,
+  useDeleteApiUserByIdMutation,
+  usePutApiUserByIdMutation,
+  usePutApiUserPasswordByIdMutation,
+  usePutApiUserActiveByIdMutation,
+  usePostApiUserMutation,
 } = extendedApi

@@ -57,7 +57,13 @@ export const ColumnEditField = ({ name, meta }: ColumnEditFieldProps) => {
 						onValueChange={(value) => setFieldValue(name, value)}
 					>
 						<SelectTrigger className="w-full">
-							<SelectValue placeholder="اختر" />
+							<SelectValue placeholder="اختر">
+								{options.find(opt => (typeof opt === 'string' ? opt : opt.value) === field.value)
+									? (typeof options.find(opt => (typeof opt === 'string' ? opt : opt.value) === field.value) === 'string'
+										? field.value
+										: (options.find(opt => (typeof opt === 'string' ? opt : opt.value) === field.value) as { label: string }).label)
+									: 'اختر'}
+							</SelectValue>
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>

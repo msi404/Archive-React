@@ -16,6 +16,7 @@ import { DatePicker } from '@/shared/components/date-picker'
 import { For } from '@/shared/components/utils/for'
 import { Switch, Match } from '@/shared/components/utils/switch'
 
+type Option = string | { label: string; value: string }
 
 type FilterType = 'text' | 'select' | 'date' | 'number'
 
@@ -23,7 +24,7 @@ interface ColumnMeta {
 	label?: string
 	filterType?: FilterType
 	filterable: boolean
-	options?: string[]
+	options?: Option[]
 }
 
 interface ColumnFilterInputProps<TData> {
@@ -42,8 +43,24 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 	const [debounced] = useDebouncedValue(inputValue, 1000)
 
 	useEffect(() => {
-		column.setFilterValue(debounced)
-	}, [ column, debounced ] )
+		// Get options and column from props within the effect's scope
+		const { options: currentOptions } = (column.columnDef.meta || {}) as ColumnMeta
+		const currentFilter = column.getFilterValue()
+
+		const foundOption = (currentOptions ?? []).find((opt) => {
+			if (typeof opt === 'string') {
+				return opt === debounced
+			}
+			return opt.value === debounced
+		})
+
+		const valueToSet = foundOption && typeof foundOption !== 'string' ? foundOption.value : debounced
+
+		// Only set the filter value if it has actually changed
+		if (valueToSet !== currentFilter) {
+			column.setFilterValue(valueToSet)
+		}
+	}, [ debounced ] )
 	
 	if (meta?.filterable === false) return null
 
@@ -65,17 +82,27 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 						onValueChange={(value) => setInputValue(value)}
 					>
 						<SelectTrigger className="w-full">
-							<SelectValue placeholder="Select an item" />
+							<SelectValue placeholder="Select an item">
+								{options.find(opt => (typeof opt === 'string' ? opt : opt.value) === inputValue)
+									? (typeof options.find(opt => (typeof opt === 'string' ? opt : opt.value) === inputValue) === 'string'
+										? inputValue
+										: (options.find(opt => (typeof opt === 'string' ? opt : opt.value) === inputValue) as { label: string }).label)
+									: 'Select an item'}
+							</SelectValue>
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
 								<SelectLabel>Items</SelectLabel>
 								<For each={options}>
-									{(item, index) => (
-										<SelectItem key={index} value={item}>
-											{item}
-										</SelectItem>
-									)}
+									{(item, index) => {
+										const value = typeof item === 'string' ? item : item.value
+										const label = typeof item === 'string' ? item : item.label
+										return (
+											<SelectItem key={index} value={value}>
+												{label}
+											</SelectItem>
+										)
+									}}
 								</For>
 							</SelectGroup>
 						</SelectContent>
@@ -88,6 +115,7 @@ export function ColumnFilterInput<TData>({ column }: ColumnFilterInputProps<TDat
 						onChange={(date) => {
 							const iso = date?.toISOString().split('T')[0]
 							if (iso) setInputValue(iso)
+							else setInputValue('')
 						}}
 					/>
 				</Match>

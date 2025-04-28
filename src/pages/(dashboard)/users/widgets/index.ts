@@ -1,0 +1,1 @@
+export { UsersWidget } from '@/pages/(dashboard)/users/widgets/users-widget';
