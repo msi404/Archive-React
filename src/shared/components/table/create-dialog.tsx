@@ -34,7 +34,6 @@ export function CreateDialog<T extends Record<string, any>>({
 		(col) => {
 			// Explicitly check for the 'creatable' meta property.
 			// Default to true if 'creatable' is not defined, exclude if explicitly false.
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error - Accessing meta potentially not defined
 			return col.columnDef.meta?.creatable !== false;
 		}
@@ -55,7 +54,6 @@ export function CreateDialog<T extends Record<string, any>>({
 	const initialValues = creatableColumns.reduce(
 		(acc, col) => {
 			// Set default initial value (e.g., empty string)
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error - meta might not exist
 			acc[col.id] = col.columnDef.meta?.defaultValue ?? ''
 			return acc

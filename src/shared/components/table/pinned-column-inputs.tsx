@@ -31,7 +31,7 @@ export const PinnedColumnsInputs: FC<{
 								})
 							}
 						>
-							{col.columnDef.meta?.label ?? col.id}
+							{(col.columnDef.meta as any)?.label ?? col.id}
 						</Button>
 					)}
 				</For>

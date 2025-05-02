@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePutApiUserByIdMutation, useGetApiUserQuery, usePostApiUserMutation } from '@/shared/api/archiveApiEnhance'
 import { usePinnedColumnsInputs } from '@/shared/models/use-pinned-columns-inputs'
 import { useUsersTable, useUsersColumns } from '@/pages/(dashboard)/users/models'
-import type { ReturnUser, CreateUser } from '@/shared/api/archiveApi'
+import type { ReturnUser } from '@/shared/api/archiveApi'
 
 export const useUsers = () =>
 {

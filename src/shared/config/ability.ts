@@ -18,7 +18,7 @@ export type Subjects =
 export type AppAbility = MongoAbility<[Actions, Subjects]>;
 
 export const defineAbilitiesFor = (user: any) => {
-  const { can, cannot, build } = new AbilityBuilder<AppAbility>(createMongoAbility);
+  const { can, build } = new AbilityBuilder<AppAbility>(createMongoAbility);
 
   if (user.role === 'Admin') {
     can( 'manage', 'all' );
